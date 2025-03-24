@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,13 +9,14 @@
   <link rel="stylesheet" href="./css/style.css" />
   <title>Bhumi & Sahil - It's all BS from here!</title>
 </head>
+
 <body>
   <!--Header-->
   <header>
     <!--Insert PNG logo from Sahil later-->
     <!-- <a href="/" class="logo">WeddingLogo</a> -->
-    <img src="./images/TRP Logo.png" alt="" class="top-left-logo">
-    <a href="#" class="menu"><ion-icon name="menu-outline"></ion-icon></a>
+    <img src="./images/Logo.png" alt="Wedding Logo" class="top-left-logo">
+    <a href="#" class="menu" aria-label="Toggle Menu"><ion-icon name="menu-outline"></ion-icon></a>
     <ul class="nav">
       <li><a class="nav-btn active" href="/" onclick="resetHeader();"><ion-icon name="home-outline"></ion-icon></a></li>
       <li><a class="nav-btn" href="#" data-target="Story">Story</a></li>
@@ -31,24 +33,63 @@
 
   <!--Banner-->
   <div class="banner container-fluid">
-    <!-- (Banner code remains unchanged) -->
     <div class="bg-slide slide-1 active">
       <div class="content">
         <h1>title</h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum ut possimus distinctio optio facere molestias aliquam eos impedit, laudantium veniam in nam sunt illum voluptas repellendus corporis doloribus eveniet fuga.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum ut possimus distinctio optio facere molestias
+          aliquam eos impedit, laudantium veniam in nam sunt illum voluptas repellendus corporis doloribus eveniet fuga.
         </p>
       </div>
       <div class="circle bg">
-        <img src="./images/wedding-1.jpg" alt="">
+        <img src="./images/warpSlide1.jpg" alt="Wedding Background">
         <div class="circle large">
-          <img src="./images/wedding-1.jpg" alt="">
+          <img src="./images/warpSlide1.jpg" alt="Wedding Large">
           <div class="circle small">
-            <img src="./images/wedding-1.jpg" alt="">
+            <img src="./images/warpSlide1.jpg" alt="Wedding Small">
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Slide 2 -->
+    <div class="bg-slide slide-2">
+      <div class="content">
+        <h1>our journey</h1>
+        <p>
+          Every love story is beautiful, but ours is my favorite. Join us as we celebrate the beginning of our forever.
+        </p>
+      </div>
+      <div class="circle bg">
+        <img src="./images/wedding-2.jpg" alt="Wedding Background">
+        <div class="circle large">
+          <img src="./images/wedding-2.jpg" alt="Wedding Large">
+          <div class="circle small">
+            <img src="./images/wedding-2.jpg" alt="Wedding Small">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="bg-slide slide-3">
+      <div class="content">
+        <h1>celebration</h1>
+        <p>
+          Two souls with but a single thought, two hearts that beat as one. We can't wait to celebrate with you!
+        </p>
+      </div>
+      <div class="circle bg">
+        <img src="./images/wedding-3.jpg" alt="Wedding Background">
+        <div class="circle large">
+          <img src="./images/wedding-3.jpg" alt="Wedding Large">
+          <div class="circle small">
+            <img src="./images/wedding-3.jpg" alt="Wedding Small">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Additional slides can be added here -->
     <ul class="slide-loader">
       <li><a class="slide-btn active" data-target="slide-1">1</a></li>
@@ -57,12 +98,12 @@
     </ul>
     <div class="share">
       <p>share</p>
-      <a href="#"><ion-icon name="share-social-outline"></ion-icon></a>
+      <a href="#" aria-label="Share"><ion-icon name="share-social-outline"></ion-icon></a>
     </div>
     <div class="lead">
-      <svg viewBox="-10 -10 120 120" width="100" height="100">
+      <svg viewBox="-10 -10 120 120" width="100%" height="100%">
         <defs>
-          <path id="circle" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/>
+          <path id="circle" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
         </defs>
         <text font-size="17">
           <textPath xlink:href="#circle">
@@ -70,7 +111,7 @@
           </textPath>
         </text>
       </svg>
-      <a href="#" class="move-down" onclick="initNavigation();">
+      <a href="#" class="move-down" onclick="initNavigation();" aria-label="Scroll Down">
         <ion-icon name="chevron-down-outline"></ion-icon>
       </a>
     </div>
@@ -82,20 +123,28 @@
     <section id="Story" class="Story">
       <div class="container">
         <div class="row">
-          <h1>Title</h1>
+          <div class="col-12">
+            <h1>Title</h1>
+          </div>
         </div>
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-md-6 mb-4 mb-md-0">
             <div class="img-box">
-              <img src="./images/about-2.jpg" alt="" class="img-fluid">
-              <img src="./images/about-1.jpg" alt="" class="corner-img">
+              <img src="./images/about-2.jpg" alt="About Us" class="img-fluid">
+              <img src="./images/about-1.jpg" alt="Corner Image" class="corner-img">
             </div>
           </div>
-          <div class="col-lg-6">
+          <div class="col-md-6">
             <img src="" alt="" class="section-bg-img">
             <h4>Lorem ipsum dolor sit amet</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis tempore accusantium velit illum. Eum aspernatur laboriosam reprehenderit maxime accusantium accusamus aperiam eligendi vel? Facilis aut deleniti doloribus qui tempore ea vero? Amet fugiat accusantium eius illum exercitationem, explicabo eum et sapiente sit omnis deleniti nisi ut veniam officiis fugit vitae.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis tempore accusantium velit illum. Eum aspernatur laboriosam reprehenderit maxime accusantium accusamus aperiam eligendi vel? Facilis aut deleniti doloribus qui tempore ea vero? Amet fugiat accusantium eius illum exercitationem, explicabo eum et sapiente sit omnis deleniti nisi ut veniam officiis fugit vitae.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis tempore accusantium velit illum. Eum
+              aspernatur laboriosam reprehenderit maxime accusantium accusamus aperiam eligendi vel? Facilis aut
+              deleniti doloribus qui tempore ea vero? Amet fugiat accusantium eius illum exercitationem, explicabo eum
+              et sapiente sit omnis deleniti nisi ut veniam officiis fugit vitae.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis tempore accusantium velit illum. Eum
+              aspernatur laboriosam reprehenderit maxime accusantium accusamus aperiam eligendi vel? Facilis aut
+              deleniti doloribus qui tempore ea vero? Amet fugiat accusantium eius illum exercitationem, explicabo eum
+              et sapiente sit omnis deleniti nisi ut veniam officiis fugit vitae.</p>
             <a href="#" class="section-btn">Next Page</a>
           </div>
         </div>
@@ -106,20 +155,26 @@
     <section id="Bride&Groom" class="Bride&Groom">
       <div class="container">
         <div class="row">
-          <h1>Meet the Bride & Groom</h1>
+          <div class="col-12">
+            <h1>Meet the Bride & Groom</h1>
+          </div>
         </div>
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="card">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          <div class="col">
+            <div class="card h-100">
               <div class="img-box">
-                <img src="./images/gallery-3.jpg" alt="">
+                <img src="./images/gallery-3.jpg" alt="Wedding Plan" class="img-fluid">
               </div>
-              <div class="details">
+              <div class="card-body details">
                 <h4>Wedding Plan</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium illum expedita quod qui dolores eius, ipsum veniam suscipit provident eveniet nulla cum eum possimus laborum fuga, ullam aliquid sint necessitatibus. Id vero necessitatibus provident voluptatum, alias, libero beatae ex recusandae quo mollitia ut tenetur accusantium laboriosam dignissimos quisquam blanditiis laborum.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium illum expedita quod qui dolores
+                  eius, ipsum veniam suscipit provident eveniet nulla cum eum possimus laborum fuga, ullam aliquid sint
+                  necessitatibus. Id vero necessitatibus provident voluptatum, alias, libero beatae ex recusandae quo
+                  mollitia ut tenetur accusantium laboriosam dignissimos quisquam blanditiis laborum.</p>
               </div>
             </div>
           </div>
+          <!-- You can add more cards here if needed -->
         </div>
       </div>
     </section>
@@ -128,48 +183,53 @@
     <section id="Events" class="Events">
       <div class="container">
         <div class="row">
-          <h1>Our Wedding Events</h1>
+          <div class="col-12">
+            <h1>Our Wedding Events</h1>
+          </div>
         </div>
-        <div class="row">
-          <div class="col-lg-4 mb-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          <div class="col">
             <div class="card h-100">
               <div class="img-box">
-                <img src="./images/gallery-1.jpg" alt="Sahil's Grah Shanti Pithi" class="card-img-top">
+                <img src="./images/gallery-1.jpg" alt="Sahil's Grah Shanti Pithi" class="card-img-top img-fluid">
               </div>
               <div class="card-body">
                 <h4 class="card-title">Sahil's Grah Shanti Pithi</h4>
                 <p class="card-text">Date: June 15, 2025</p>
                 <p class="card-text">Time: 6:00 PM - 10:00 PM</p>
                 <p class="card-text">Venue: Royal Garden Hall</p>
-                <p class="card-text">Join us for a traditional ceremony filled with music, dance, and blessings for the groom.</p>
+                <p class="card-text">Join us for a traditional ceremony filled with music, dance, and blessings for the
+                  groom.</p>
               </div>
             </div>
           </div>
-          <div class="col-lg-4 mb-4">
+          <div class="col">
             <div class="card h-100">
               <div class="img-box">
-                <img src="./images/gallery-2.jpg" alt="Bhumi's Grah Shanti Pithi" class="card-img-top">
+                <img src="./images/gallery-2.jpg" alt="Bhumi's Grah Shanti Pithi" class="card-img-top img-fluid">
               </div>
               <div class="card-body">
                 <h4 class="card-title">Bhumi's Grah Shanti Pithi</h4>
                 <p class="card-text">Date: June 16, 2025</p>
                 <p class="card-text">Time: 6:00 PM - 10:00 PM</p>
                 <p class="card-text">Venue: Lakeside Pavilion</p>
-                <p class="card-text">A joyous celebration with rituals, music, and blessings for the bride before the wedding day.</p>
+                <p class="card-text">A joyous celebration with rituals, music, and blessings for the bride before the
+                  wedding day.</p>
               </div>
             </div>
           </div>
-          <div class="col-lg-4 mb-4">
+          <div class="col">
             <div class="card h-100">
               <div class="img-box">
-                <img src="./images/gallery-3.jpg" alt="The Wedding" class="card-img-top">
+                <img src="./images/gallery-3.jpg" alt="The Wedding" class="card-img-top img-fluid">
               </div>
               <div class="card-body">
                 <h4 class="card-title">The Wedding</h4>
                 <p class="card-text">Date: June 18, 2025</p>
                 <p class="card-text">Time: 4:00 PM - 12:00 AM</p>
                 <p class="card-text">Venue: Grand Ballroom, Lotus Hotel</p>
-                <p class="card-text">Join us for our wedding ceremony followed by a dinner reception celebrating our new journey together.</p>
+                <p class="card-text">Join us for our wedding ceremony followed by a dinner reception celebrating our new
+                  journey together.</p>
               </div>
             </div>
           </div>
@@ -180,9 +240,13 @@
     <!--RSVP Section-->
     <section id="RSVP" class="RSVP">
       <div class="container">
-        <h1>RSVP</h1>
+        <div class="row">
+          <div class="col-12">
+            <h1>RSVP</h1>
+          </div>
+        </div>
         <div class="row justify-content-center">
-          <div class="col-md-8">
+          <div class="col-md-10 col-lg-8">
             <!-- Invitation Validation Form -->
             <form id="rsvp-validation-form" class="mb-5">
               <div class="mb-3">
@@ -195,7 +259,8 @@
               </div>
               <div class="mb-3">
                 <label for="invitation-code" class="form-label">Invitation Code</label>
-                <input type="text" class="form-control" id="invitation-code" placeholder="Enter invitation code" required>
+                <input type="text" class="form-control" id="invitation-code" placeholder="Enter invitation code"
+                  required>
               </div>
               <div id="validation-error" class="text-danger mb-3" style="display: none;"></div>
               <button type="submit" class="btn btn-primary">Validate Invitation</button>
@@ -224,11 +289,12 @@
               </div>
               <div class="mb-3">
                 <label for="rsvp-notes" class="form-label">Special Notes (Optional)</label>
-                <textarea class="form-control" id="rsvp-notes" rows="3" placeholder="Dietary restrictions, accessibility needs, etc."></textarea>
+                <textarea class="form-control" id="rsvp-notes" rows="3"
+                  placeholder="Dietary restrictions, accessibility needs, etc."></textarea>
               </div>
               <button type="submit" class="btn btn-success">Submit RSVP</button>
             </form>
-            
+
             <!-- Success Message (initially hidden) -->
             <div id="rsvp-success" class="alert alert-success mt-4" style="display: none;">
               <h4>Thank you for your RSVP!</h4>
@@ -247,7 +313,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  
+
   <!-- Firebase SDK scripts -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
@@ -263,7 +329,7 @@
       appId: "1:456629506216:web:1e37b4fe3ff68dab18729d",
       measurementId: "G-24PLJ23TCZ"
     };
-  
+
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
@@ -271,10 +337,11 @@
     // Make Firebase available globally
     window.firebase = firebase;
   </script>
-  
+
   <!--Customized JavaScript-->
   <script src="./js/main.js"></script>
   <script type="module" src="./js/auth.js"></script>
   <script type="module" src="./js/rsvp.js"></script>
 </body>
+
 </html>

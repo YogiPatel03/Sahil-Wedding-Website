@@ -18,6 +18,15 @@ const toggleMenu = () => {
 
     // Add a body class to prevent scrolling when menu is open
     document.body.classList.toggle('menu-open');
+    
+    // Ensure accessibility
+    if (nav.classList.contains('active')) {
+        menu.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-label', 'Close Menu');
+    } else {
+        menu.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-label', 'Open Menu');
+    }
 };
 
 // Close menu when clicking outside of it

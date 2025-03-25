@@ -1,7 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+import { getFirestore, collection, addDoc, getDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-// Get the Firebase app instance that was initialized in index.html
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDSRU9baE603YW6znjqW9YRSkOtlHPg3Hs",
   authDomain: "sahil-wedding-website.firebaseapp.com",
@@ -12,19 +12,20 @@ const firebaseConfig = {
   measurementId: "G-24PLJ23TCZ"
 };
 
-// Initialize Firebase if not already initialized
+// Initialize Firebase and Firestore with error handling
 let app;
+let db;
+let devMode = false; // Set to false for production
+
 try {
-  app = firebase.app();
-} catch (e) {
   app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
+  console.log("Firebase initialized successfully");
+} catch (error) {
+  console.error("Error initializing Firebase:", error);
+  devMode = true; // Fall back to devMode if Firebase initialization fails
+  console.log("Fallback to development mode");
 }
-
-// Initialize Firestore
-const db = getFirestore(app);
-
-// For local development and testing
-const devMode = true; // Set to false when deploying to production
 
 // Dummy invitation database for local testing
 const invitationDatabase = {
@@ -51,7 +52,7 @@ const invitationDatabase = {
     lastName: "Smith",
     allowedEvents: ["Sahil's Grah Shanti Pithi", "Bhumi's Grah Shanti Pithi", "The Wedding"],
     maxGuests: 8
-  }
+  },
 };
 
 /*
@@ -88,8 +89,10 @@ function populateEventCheckboxes(invitation) {
 async function validateInvitation(firstName, lastName, code) {
   if (devMode) {
     // Local development mode - check against dummy database
-    if (invitationDatabase.hasOwnProperty(code)) {
-      const invitation = invitationDatabase[code];
+    // For dev mode, convert to uppercase for case-insensitive comparison
+    const uppercaseCode = code.toUpperCase();
+    if (invitationDatabase.hasOwnProperty(uppercaseCode)) {
+      const invitation = invitationDatabase[uppercaseCode];
       if (invitation.firstName.toLowerCase() === firstName.toLowerCase() &&
           invitation.lastName.toLowerCase() === lastName.toLowerCase()) {
         return { valid: true, invitation };
@@ -102,18 +105,30 @@ async function validateInvitation(firstName, lastName, code) {
   } else {
     // Production mode - check against Firebase
     try {
+      console.log("Checking invitation code:", code);
+      // Do not convert code to uppercase for Firebase - maintain exact case
       const invitationRef = doc(db, "invitations", code);
       const invitationDoc = await getDoc(invitationRef);
       
       if (invitationDoc.exists()) {
         const invitation = invitationDoc.data();
+        console.log("Found invitation:", invitation);
+        
+        // Convert maxGuests to number if it's a string
+        invitation.maxGuests = parseInt(invitation.maxGuests, 10);
+        
         if (invitation.firstName.toLowerCase() === firstName.toLowerCase() &&
             invitation.lastName.toLowerCase() === lastName.toLowerCase()) {
           return { valid: true, invitation };
         } else {
+          console.log("Name mismatch:", {
+            expected: { firstName: invitation.firstName, lastName: invitation.lastName },
+            received: { firstName, lastName }
+          });
           return { valid: false, error: "Name does not match our records for this invitation code." };
         }
       } else {
+        console.log("No invitation found for code:", code);
         return { valid: false, error: "Invalid invitation code. Please try again." };
       }
     } catch (error) {
@@ -150,7 +165,7 @@ document.getElementById("rsvp-validation-form").addEventListener("submit", async
   
   const firstName = document.getElementById("rsvp-first-name").value.trim();
   const lastName = document.getElementById("rsvp-last-name").value.trim();
-  const code = document.getElementById("invitation-code").value.trim().toUpperCase();
+  const code = document.getElementById("invitation-code").value.trim();
   const errorDiv = document.getElementById("validation-error");
   
   // Show loading indication
@@ -213,7 +228,7 @@ document.getElementById("rsvp-details-form").addEventListener("submit", async fu
                     .filter(cb => cb.checked)
                     .map(cb => cb.value),
     guestCount: guestCount,
-    invitationCode: document.getElementById("invitation-code").value.trim().toUpperCase(),
+    invitationCode: document.getElementById("invitation-code").value.trim(),
     notes: document.getElementById("rsvp-notes").value.trim(),
     timestamp: new Date().toISOString()
   };

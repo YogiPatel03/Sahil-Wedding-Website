@@ -314,30 +314,6 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 
-  <!-- Firebase SDK scripts -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyDSRU9baE603YW6znjqW9YRSkOtlHPg3Hs",
-      authDomain: "sahil-wedding-website.firebaseapp.com",
-      projectId: "sahil-wedding-website",
-      storageBucket: "sahil-wedding-website.firebasestorage.app",
-      messagingSenderId: "456629506216",
-      appId: "1:456629506216:web:1e37b4fe3ff68dab18729d",
-      measurementId: "G-24PLJ23TCZ"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-
-    // Make Firebase available globally
-    window.firebase = firebase;
-  </script>
-
   <!--Customized JavaScript-->
   <script src="./js/main.js"></script>
   <script type="module" src="./js/auth.js"></script>

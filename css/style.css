@@ -74,7 +74,7 @@ header.active {
     width: auto;
     z-index: 1310;
     transition: 0.3s ease-in-out;
-    margin-right: 2rem;
+    margin-right: 0; /* Remove right margin */
 }
 
 .menu {
@@ -94,6 +94,7 @@ header.active {
     font-size: 1.5em;
 }
 
+/* Main Navigation */
 .nav {
     display: flex;
     justify-content: center;
@@ -101,30 +102,15 @@ header.active {
     margin: 0;
     padding: 0;
     flex: 1;
-    /* Take up all available space between logo and search */
 }
 
 .nav li {
     list-style: none;
-    position: inherit;
-    /* Equal spacing between nav items */
+    position: relative;
     padding: 0;
-    /* Create equal spacing using flex */
     display: flex;
     justify-content: center;
-}
-
-/* Make all nav items equal width for proper centering */
-.nav li:nth-child(1),
-.nav li:nth-child(2),
-.nav li:nth-child(4),
-.nav li:nth-child(5) {
-    flex: 1;
-}
-
-/* Make the middle item (Bride & Groom) slightly wider to emphasize it */
-.nav li:nth-child(3) {
-    flex: 1.2;
+    flex: 1; /* Make all items equal width */
 }
 
 .nav li a {
@@ -135,14 +121,13 @@ header.active {
     cursor: pointer;
     transition: 0.5s;
     font-weight: 300;
-    padding: 10px;
+    padding: 0 15px;
     white-space: nowrap;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     height: 2.5rem;
-    /* Match height with search input */
 }
 
 .nav li a:hover,
@@ -150,6 +135,7 @@ header.active {
     color: var(--primary);
 }
 
+/* Search */
 .search {
     position: relative;
     width: 300px;
@@ -157,8 +143,7 @@ header.active {
     transition: 0.5s;
     display: flex;
     align-items: center;
-    margin-left: 2rem;
-    /* Right aligned */
+    margin-left: 0; /* Remove left margin */
 }
 
 .search input {
@@ -765,115 +750,93 @@ section p {
         background: #fff;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         z-index: 1500;
-        justify-content: center;
-    }
-    
-    /* Show mobile logo and hide desktop logo */
-    .desktop-logo {
-        display: none;
-    }
-    
-    .mobile-logo-container {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px 4px;
-    }
-    
-    /* Better vertical alignment for all navigation elements */
-    .nav {
-        margin: 0 auto;
-        width: 100%;
-        max-width: 500px;
-        display: flex;
         justify-content: space-between;
-        align-items: center;
     }
     
-    /* Increase logo size to better match icons */
-    .mobile-logo {
-        height: 2.2rem; /* Slightly larger than icons for better visibility */
+    /* Show desktop logo in mobile but smaller */
+    .desktop-logo {
+        display: block;
+        height: 2.2rem;
         width: auto;
         margin: 0;
     }
     
-    /* Consistent styling for all navigation items */
-    .nav li {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 50px; /* Fixed height for all items */
-    }
-    
-    /* Adjust icon size */
-    .nav li a ion-icon {
-        font-size: 2rem;
-        margin: 0;
-    }
-
     /* Hide the hamburger menu */
     .menu {
         display: none;
     }
-
-    /* Style the nav as a horizontal bar */
+    
+    /* Mobile nav styling for centered layout */
     .nav {
-        margin: 0 auto;
-        width: 100%;
-        max-width: 500px;
+        position: absolute;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        width: 80%;
+        max-width: 400px;
+        height: 100%;
         display: flex;
-        justify-content: space-between;
+        align-items: center;
     }
-
+    
+    /* Make all nav items the same base width */
     .nav li {
         flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0;
+        position: relative;
     }
     
-    /* Make all icons-only for mobile */
+    /* Position items properly for the centered layout */
+    .nav li a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 0;
+    }
+    
+    /* Make the center item (Bride & Groom) stand out slightly */
+    .nav li:nth-child(3) a ion-icon {
+        font-size: 2.4rem;
+        color: var(--primary);
+    }
+    
+    /* Hide spans (text) on mobile */
     .nav li a span {
         display: none;
     }
     
-    /* Adjust icon size and spacing for mobile */
-    .nav li a {
-        padding: 10px 4px;
-        height: auto;
-        font-size: 0.7rem;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
+    /* Size the icons properly */
     .nav li a ion-icon {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
         margin: 0;
     }
     
+    /* Active state for mobile navigation */
     .nav li a.active {
         color: var(--primary);
-        font-weight: 600;
-        background-color: transparent;
-        border-left: none;
-        position: relative;
     }
     
     .nav li a.active::after {
         content: '';
         position: absolute;
-        bottom: 0;
-        left: 25%;
-        width: 50%;
-        height: 2px;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
         background-color: var(--primary);
+        border-radius: 50%;
     }
-
-    /* Hide the search bar */
+    
+    /* Special styling for the active center item */
+    .nav li:nth-child(3) a.active ion-icon {
+        transform: scale(1.1);
+    }
+    
+    /* Hide the search bar on mobile */
     .search {
         display: none;
     }
@@ -979,31 +942,38 @@ section p {
         margin: 0;
     }
 
-    /* Restore active item underline */
-    .nav li a.active::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 25%;
-        width: 50%;
-        height: 2px;
-        background-color: var(--primary);
-    }
-    
-    /* Special style for logo/home active state */
-    .mobile-logo-container + li a.active::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 25%;
-        width: 50%;
-        height: 2px;
-        background-color: var(--primary);
+    /* Remove unneeded styles for mobile-logo-container */
+    .mobile-logo-container {
+        display: none;
     }
 }
 
 /* Mobile phones */
 @media (max-width: 480px) {
+    /* Logo sizing */
+    .desktop-logo {
+        height: 2rem;
+    }
+    
+    /* Adjust icon sizes */
+    .nav li a ion-icon {
+        font-size: 2rem;
+    }
+    
+    /* Adjust width for smaller screens while keeping Bride & Groom centered */
+    .nav {
+        width: 90%;
+    }
+    
+    .nav li a ion-icon {
+        font-size: 2rem;
+    }
+    
+    /* Keep the center item (Bride & Groom) slightly larger */
+    .nav li:nth-child(3) a ion-icon {
+        font-size: 2.2rem;
+    }
+
     .bg-slide .content {
         width: 95%;
     }
@@ -1050,7 +1020,7 @@ section p {
     }
     
     .nav li a ion-icon {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
     /* Remove any offset margins */
@@ -1075,6 +1045,30 @@ section p {
 
 /* Very small phones */
 @media (max-width: 360px) {
+    /* Logo sizing */
+    .desktop-logo {
+        height: 1.8rem;
+    }
+    
+    /* Adjust icon sizes */
+    .nav li a ion-icon {
+        font-size: 1.8rem;
+    }
+    
+    /* Ensure navigation fills most of the space */
+    .nav {
+        width: 95%;
+    }
+    
+    .nav li a ion-icon {
+        font-size: 1.8rem;
+    }
+    
+    /* Keep the center item (Bride & Groom) slightly larger */
+    .nav li:nth-child(3) a ion-icon {
+        font-size: 2rem;
+    }
+    
     header {
         padding: 10px var(--header-padding-mobile);
     }
@@ -1083,11 +1077,6 @@ section p {
     .nav li a {
         padding: 6px 2px;
         font-size: 0.6rem;
-    }
-    
-    .nav li a ion-icon {
-        font-size: 1.6rem;
-        margin: 0;
     }
     
     /* Ensure text fits for Bride & Groom */
@@ -1100,12 +1089,6 @@ section p {
     header .top-left-logo {
         left: 10px;
         height: calc(1.8rem * 0.95);
-    }
-    
-    /* Reduce left margin */
-    .nav {
-        margin: 0 auto;
-    width: 100%;
     }
     
     /* Original styles restored */

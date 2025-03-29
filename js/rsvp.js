@@ -84,7 +84,7 @@ function populateEventCheckboxes(invitation) {
     eventsDiv.appendChild(checkboxContainer);
   });
 }
-
+//commenting so itll let me commit
 // Function to validate invitation code against database
 async function validateInvitation(firstName, lastName, code) {
   if (devMode) {

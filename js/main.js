@@ -170,11 +170,11 @@ const initNavigation = () => {
     const navList = document.querySelectorAll('.nav-btn');
     navList.forEach(el => {
         el.classList.remove('active');
-        if (el.getAttribute('data-target') === 'Story') {
+        if (el.getAttribute('data-target') === 'Bride&Groom') {
             el.classList.add('active');
         }
     });
-    sectionNavigator('Story');
+    sectionNavigator('Bride&Groom');
 };
 
 // Add responsive image loading

@@ -16,11 +16,16 @@
     <img src="./images/Logo.png" alt="Wedding Logo" class="top-left-logo desktop-logo">
     <a href="#" class="menu" aria-label="Toggle Menu"><ion-icon name="menu-outline"></ion-icon></a>
     <ul class="nav">
-      <li><a class="nav-btn active" href="/" onclick="resetHeader();"><ion-icon name="home-outline"></ion-icon> <span>Home</span></a></li>
-      <li><a class="nav-btn" href="#" data-target="Bride&Groom"><ion-icon name="people-outline"></ion-icon> <span>Bride & Groom</span></a></li>
-      <li><a class="nav-btn" href="#" data-target="Events"><ion-icon name="heart-outline"></ion-icon> <span>Wedding</span></a></li>
-      <li><a class="nav-btn" href="#" data-target="Accommodation"><ion-icon name="bed-outline"></ion-icon> <span>Accommodation</span></a></li>
-      <li><a class="nav-btn" href="#" data-target="RSVP"><ion-icon name="mail-outline"></ion-icon> <span>RSVP</span></a></li>
+      <li><a class="nav-btn active" href="/" onclick="resetHeader();"><ion-icon name="home-outline"></ion-icon>
+          <span>Home</span></a></li>
+      <li><a class="nav-btn" href="#" data-target="Bride&Groom"><ion-icon name="people-outline"></ion-icon> <span>Bride
+            & Groom</span></a></li>
+      <li><a class="nav-btn" href="#" data-target="Events"><ion-icon name="heart-outline"></ion-icon>
+          <span>Wedding</span></a></li>
+      <li><a class="nav-btn" href="#" data-target="Accommodation"><ion-icon name="bed-outline"></ion-icon>
+          <span>Accommodation</span></a></li>
+      <li><a class="nav-btn" href="#" data-target="RSVP"><ion-icon name="mail-outline"></ion-icon> <span>RSVP</span></a>
+      </li>
     </ul>
     <div class="search">
       <input type="text" placeholder="Search">
@@ -127,16 +132,20 @@
             <div class="couple-details">
               <h2 class="couple-title">Introducing the Couple: The Bride and Groom.</h2>
               <div class="title-divider"></div>
-              
+
               <h3 class="bride-name">Bhumi</h3>
               <div class="name-underline"></div>
-              <p class="bride-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              
+              <p class="bride-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat.</p>
+
               <div class="name-divider"></div>
-              
+
               <h3 class="groom-name">Sahil</h3>
               <div class="name-underline"></div>
-              <p class="groom-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p class="groom-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
           </div>
         </div>
@@ -162,7 +171,8 @@
                 <p class="card-text">Date: August 31st, 2025</p>
                 <p class="card-text">Time: 4:00 PM - 12:00 AM</p>
                 <p class="card-text">Venue: BAPS Shri Swaminarayan Mandir, Nashville Tennessee</p>
-                <p class="card-text">Join us for our wedding ceremony followed by a dinner reception celebrating our new journey together.</p>
+                <p class="card-text">Join us for our wedding ceremony followed by a dinner reception celebrating our new
+                  journey together.</p>
               </div>
             </div>
           </div>
@@ -176,21 +186,41 @@
         <div class="row">
           <div class="col-12">
             <h1>Accommodation</h1>
+            <div class="title-divider accommodation-divider"></div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 mb-4 mb-md-0">
             <div class="img-box">
-              <img src="./images/about-2.jpg" alt="Accommodation" class="img-fluid">
-              <img src="./images/about-1.jpg" alt="Corner Image" class="corner-img">
+              <!-- Hotel image as main image instead of the map -->
+              <img src="./images/hotelImg.jpg" alt="Hotel Image" class="img-fluid main-hotel-img">
+
+              <!-- Map as corner image -->
+              <div class="map-container corner-map">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3222.1730796559187!2d-86.7782867!3d36.1583954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886466579b4e4d11%3A0x81cc85149efd8ac2!2sHilton%20Nashville%20Downtown!5e0!3m2!1sen!2sus!4v1653389089599!5m2!1sen!2sus"
+                  width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade" class="hotel-map">
+                </iframe>
+                <div class="map-expand-button">
+                  <a href="https://www.google.com/maps/place/Hilton+Nashville+Downtown/@36.1583954,-86.7782867,17z/data=!3m1!4b1!4m8!3m7!1s0x886466579b4e4d11:0x81cc85149efd8ac2!5m2!4m1!1i2!8m2!3d36.1583954!4d-86.7782867"
+                    target="_blank" class="btn btn-sm" aria-label="Open larger map">
+                    <ion-icon name="expand-outline"></ion-icon> View Larger Map
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <img src="" alt="" class="section-bg-img">
             <h4>Stay Information</h4>
-            <p>Information about hotels and accommodations near the venue. We have arranged special rates at several hotels for our wedding guests. Please find the details below including room rates, booking instructions, and amenities.</p>
-            <p>For any questions regarding accommodation, please contact us directly. We are happy to help you find the perfect place to stay during our celebration.</p>
-            <a href="#" class="section-btn">Book Now</a>
+            <p>Information about hotels and accommodations near the venue. We have arranged special rates at several
+              hotels for our wedding guests. Please find the details below including room rates, booking instructions,
+              and amenities.</p>
+            <p>For any questions regarding accommodation, please contact us directly. We are happy to help you find the
+              perfect place to stay during our celebration.</p>
+            <a href="https://www.hilton.com/en/hotels/bnanshf-hilton-nashville-downtown/?SEO_id=GMB-AMER-HH-BNANSHF&y_source=1_MTIyMDc4Mi03MTUtbG9jYXRpb24ud2Vic2l0ZQ%3D%3D"
+              target="_blank" class="section-btn">Book Now</a>
           </div>
         </div>
       </div>

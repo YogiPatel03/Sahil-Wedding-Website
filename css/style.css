@@ -10,7 +10,13 @@
 }
 
 :root {
-    --primary: #ff0066;
+    --primary: #5f4638; /* Dark brown */
+    --secondary: #78635a; /* Softer medium brown */
+    --accent: #ffc4a8; /* Peach/coral color */
+    --background-light: #fff7f0; /* Light cream background */
+    --text-dark: #3a2d25; /* Very dark brown for text */
+    --title-brown: #6b5144; /* Soft brown for title text */
+    --peach-text: #f9c3a9; /* Peach/pinkish color from the first screenshot */
     --header-padding-desktop: 100px;
     --header-padding-tablet: 50px;
     --header-padding-mobile: 20px;
@@ -21,12 +27,13 @@
 
 body {
     position: relative;
-    background: #ffffff;
+    background: var(--background-light);
     font-family: "Ubuntu Condensed", serif;
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
     /* Changed from hidden to allow scrolling but prevent horizontal overflow */
+    color: var(--secondary);
 }
 
 body.menu-open {
@@ -46,14 +53,14 @@ header {
     padding: 20px var(--header-padding-desktop);
     background: transparent;
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(90, 61, 43, 0.2); /* Updated border color */
     transition: 1s;
     z-index: 1300;
 }
 
 header.active {
-    background: #ffffff;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.19);
+    background: var(--background-light);
+    box-shadow: 0 0 50px rgba(95, 70, 56, 0.15);
 }
 
 /* Default styles for all devices */
@@ -132,7 +139,7 @@ header.active {
 
 .nav li a:hover,
 .nav li a.active {
-    color: var(--primary);
+    color: var(--accent);
 }
 
 /* Search */
@@ -150,17 +157,17 @@ header.active {
     position: relative;
     width: 100%;
     height: 2.5rem;
-    color: #000000;
+    color: var(--secondary);
     background: transparent;
     border: none;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid var(--secondary);
     outline: none;
     padding: 0 40px 0 15px;
     font-size: 1rem;
 }
 
 .search input::placeholder {
-    color: #000000;
+    color: var(--secondary);
     text-transform: uppercase;
     font-weight: 350;
 }
@@ -172,9 +179,9 @@ header.active {
     transform: translateY(-50%);
     right: 10px;
     padding-left: 10px;
-    color: #000000;
+    color: var(--secondary);
     cursor: pointer;
-    border-left: 1px solid #000000;
+    border-left: 1px solid var(--secondary);
     z-index: 1;
 }
 
@@ -232,7 +239,7 @@ header.active {
     font-size: clamp(3em, 8vw, 8em);
     /* Responsive font size */
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--peach-text);
     line-height: 1.2;
 }
 
@@ -242,6 +249,7 @@ header.active {
     font-size: clamp(1em, 2vw, 1.5em);
     /* Responsive font size */
     letter-spacing: 1px;
+    color: var(--peach-text);
 }
 
 .bg-slide.active .content {
@@ -362,7 +370,7 @@ header.active {
 
 .slide-loader li a {
     text-decoration: none;
-    color: #111111;
+    color: var(--secondary);
     font-size: clamp(1.5em, 2vw, 2em);
     /* Responsive font size */
     font-weight: 800;
@@ -376,6 +384,7 @@ header.active {
 .slide-loader li a.active {
     font-size: clamp(3em, 4vw, 4em);
     /* Responsive font size */
+    color: var(--peach-text);
 }
 
 .slide-loader::before {
@@ -385,7 +394,7 @@ header.active {
     left: -70%;
     width: 100px;
     height: 2px;
-    background: #111111;
+    background: var(--secondary);
     display: none;
     /* Hide on smaller screens */
 }
@@ -393,7 +402,7 @@ header.active {
 .share {
     position: absolute;
     bottom: 5%;
-    left: 5%;
+    left: 6%; /* Moved from 5% to 7% to shift it right */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -409,7 +418,7 @@ header.active {
     top: -120%;
     height: 100px;
     width: 2px;
-    background: #111111;
+    background: #111111; /* Changed to dark black */
 }
 
 .share p {
@@ -417,12 +426,16 @@ header.active {
     text-transform: uppercase;
     font-weight: 300;
     letter-spacing: 1px;
-    color: #111111;
+    color: #111111; /* Changed to dark black */
 }
 
 .share a {
     text-decoration: none;
-    color: #111111;
+    color: #111111; /* Changed to dark black */
+}
+
+.share a:hover {
+    color: var(--accent);
 }
 
 .share a ion-icon {
@@ -445,7 +458,7 @@ header.active {
 .move-down {
     position: absolute;
     z-index: 1100;
-    color: #111111;
+    color: var(--secondary);
     animation: flink 1.5s linear infinite;
 }
 
@@ -470,7 +483,7 @@ header.active {
     position: absolute;
     transform: translateY(50%);
     z-index: 1100;
-    fill: currentColor;
+    fill: var(--peach-text);
     height: auto;
     max-width: 20vmin;
     transform-origin: center;
@@ -485,7 +498,7 @@ section {
     width: 100%;
     top: 100vh;
     bottom: 0;
-    background: #ffffff;
+    background: var(--background-light);
     transition: ease-in-out 1s;
     transform-origin: bottom;
     z-index: 1100;
@@ -517,6 +530,7 @@ section h1 {
     letter-spacing: 1px;
     margin-bottom: 150px;
     text-align: center;
+    color: var(--title-brown);
 }
 
 section h4 {
@@ -526,11 +540,12 @@ section h4 {
     /* Responsive font size */
     letter-spacing: 1px;
     margin-bottom: 20px;
+    color: var(--title-brown);
 }
 
 section p {
     font-weight: 300;
-    color: #111111;
+    color: var(--secondary);
     letter-spacing: 1px;
     margin-bottom: 40px;
     font-size: clamp(0.9em, 1.2vw, 1em);
@@ -539,7 +554,7 @@ section p {
 
 /* About Section */
 .Accommodation h4::first-letter {
-    color: var(--primary);
+    color: var(--title-brown);
     font-size: 2em;
 }
 
@@ -551,7 +566,7 @@ section p {
     top: 250px;
     height: 100px;
     width: 2px;
-    background: #111111;
+    background: var(--primary);
 }
 
 .Accommodation .img-box {
@@ -588,7 +603,7 @@ section p {
 .section-btn {
     position: relative;
     text-decoration: none;
-    color: #111111;
+    color: var(--secondary);
     text-transform: uppercase;
     font-weight: 300;
     letter-spacing: 1px;
@@ -599,7 +614,7 @@ section p {
 }
 
 .section-btn:hover {
-    color: var(--primary);
+    color: var(--accent);
 }
 
 .section-btn::before {
@@ -609,75 +624,178 @@ section p {
     bottom: -10px;
     width: 85%;
     height: 1px;
-    background: #111111;
+    background: var(--accent);
     transition: 0.3s;
 }
 
 .section-btn:hover::before {
     left: 20%;
-    background: var(--primary);
+    background: var(--accent);
 }
 
 /* Events Section */
 .Events .card {
     transition: all 0.3s ease;
     border: none;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(95, 70, 56, 0.1);
     height: 100%;
-    /* Ensure same height for all cards */
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 2rem auto;
+    max-width: 900px;
 }
 
 .Events .card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 30px rgba(95, 70, 56, 0.2);
 }
 
 .Events .img-box {
-    height: 200px;
+    height: 400px; /* Increased from 350px */
     overflow: hidden;
+    position: relative;
 }
 
-.Events .img-box img {
+.Events .card-body {
+    padding: 1.5rem; /* Reduced from 2rem */
+}
+
+.Events .card-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2em, 3vw, 2.5em);
+    margin-bottom: 15px; /* Reduced from 20px */
+    color: var(--title-brown);
+    text-align: center;
+}
+
+.Events .card-text {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem; /* Reduced from 0.8rem */
+    text-align: center;
+}
+
+.Events .card-text:last-of-type {
+    margin-top: 1rem; /* Reduced from 1.5rem */
+    font-style: italic;
+    line-height: 1.6;
+}
+
+/* Update spacing for Wedding section */
+.Events h1 {
+    margin-bottom: 2rem;
+}
+
+.Events .img-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all 0.5s ease;
+    height: 3px;
+    background: var(--accent);
 }
 
 .Events .card:hover .img-box img {
     transform: scale(1.1);
 }
 
-.Events .card-title {
-    font-family: 'Great Vibes', cursive;
-    font-size: clamp(1.5em, 2vw, 2em);
-    /* Responsive font size */
-    margin-bottom: 10px;
-    color: var(--primary);
+/* Add an accent background to a section for contrast */
+.Events {
+    background-color: var(--background-light);
 }
 
-/* RSVP Section */
+.Accommodation {
+    background-color: #fff;
+}
+
+.RSVP {
+    background-color: var(--background-light);
+}
+
 .RSVP form {
     background: #fff;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(95, 70, 56, 0.1);
     width: 100%;
+    border-top: 3px solid var(--accent);
 }
 
 .RSVP button {
-    background-color: var(--primary);
+    background-color: var(--accent);
     border: none;
     padding: 10px 20px;
     transition: all 0.3s ease;
     width: 100%;
     /* Full width on mobile */
+    color: var(--text-dark);
+    font-weight: 500;
 }
 
 .RSVP button:hover {
-    background-color: #e0005c;
+    background-color: var(--primary);
+    color: #fff;
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(255, 0, 102, 0.3);
+    box-shadow: 0 5px 15px rgba(95, 70, 56, 0.3);
+}
+
+/* Add some accent color to form inputs when focused */
+.RSVP form .form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.25rem rgba(255, 196, 168, 0.25);
+}
+
+/* Update mobile-specific elements */
+@media (max-width: 768px) {
+    header {
+        background: var(--background-light);
+    }
+    
+    /* Add a subtle divider between nav items */
+    .nav li:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 20px;
+        width: 1px;
+        background-color: rgba(95, 70, 56, 0.1);
+    }
+    
+    /* Update section transitions for mobile */
+    section.section-show {
+        padding-top: 20px;
+        padding-bottom: 30px;
+        border-top: 3px solid var(--accent);
+    }
+
+    .Events .img-box {
+        height: 300px; /* Increased from 250px */
+    }
+    
+    .Events .card-body {
+        padding: 1.2rem; /* Reduced from 1.5rem */
+    }
+    
+    .Events .card-title {
+        font-size: 1.8em;
+    }
+    
+    .Events .card-text {
+        font-size: 1rem;
+    }
+}
+
+/* Add some accent to the search bar */
+.search input:focus {
+    border-bottom: 1px solid var(--accent);
+}
+
+.search input:focus + ion-icon {
+    color: var(--accent);
+    border-left: 1px solid var(--accent);
 }
 
 /* Additional responsive styles */
@@ -826,7 +944,7 @@ section p {
     /* Make the center item (Bride & Groom) stand out slightly */
     .nav li:nth-child(3) a ion-icon {
         font-size: 2.4rem;
-        color: var(--primary);
+        color: var(--accent);
     }
     
     /* Hide spans (text) on mobile */
@@ -842,7 +960,7 @@ section p {
     
     /* Active state for mobile navigation */
     .nav li a.active {
-        color: var(--primary);
+        color: var(--accent);
     }
     
     .nav li a.active::after {
@@ -853,7 +971,7 @@ section p {
         transform: translateX(-50%);
         width: 5px;
         height: 5px;
-        background-color: var(--primary);
+        background-color: var(--accent);
         border-radius: 50%;
     }
     
@@ -1234,13 +1352,13 @@ section p {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #faf8f3; /* Light cream background color */
+    background-color: var(--background-light);
 }
 
 .Bride\&Groom .couple-title {
     font-family: 'Great Vibes', cursive;
     font-size: 2.2em;
-    color: #5a3d2b; /* Brown color */
+    color: var(--title-brown);
     margin-bottom: 10px;
     font-weight: normal;
     font-style: italic;
@@ -1258,7 +1376,7 @@ section p {
 .Bride\&Groom .groom-name {
     font-family: 'Great Vibes', cursive;
     font-size: 2.2em;
-    color: #5a3d2b; /* Brown color */
+    color: var(--title-brown);
     margin-bottom: 5px;
     font-weight: normal;
     font-style: italic;
@@ -1276,7 +1394,7 @@ section p {
 .Bride\&Groom .groom-desc {
     font-size: 0.9em;
     line-height: 1.7;
-    color: #6d5c51; /* Softer brown for text */
+    color: var(--secondary);
     width: 100%;
     font-style: italic;
     text-align: center;
@@ -1300,4 +1418,11 @@ section p {
         padding: 40px 20px;
         height: auto;
     }
+}
+
+.Events .img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
 }

@@ -412,11 +412,14 @@ header.active {
 }
 
 .share {
+    /* Hide the entire share component (button, text, and line) */
+    display: none;
+    
+    /* Original positioning (kept for reference) */
     position: absolute;
     bottom: 5%;
     left: 6%;
     /* Moved from 5% to 7% to shift it right */
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -476,12 +479,15 @@ header.active {
     z-index: 1100;
     color: var(--secondary);
     animation: flink 1.5s linear infinite;
+    /* Position at center horizontally but offset vertically to align perfectly */
+    top: 74%; /* Adjusted to be slightly higher than before */
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .move-down ion-icon {
     font-size: clamp(2em, 3.5vw, 3.5em);
-    /* Responsive font size */
-    transform: translateY(140%);
+    /* Responsive font size without position transform */
 }
 
 @keyframes flink {
@@ -825,9 +831,9 @@ section p {
     /* Make all nav items the same base width */
     .nav li {
         flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
         position: relative;
     }
 
@@ -843,7 +849,7 @@ section p {
     /* Make the center item (Bride & Groom) stand out slightly */
     .nav li:nth-child(3) a ion-icon {
         font-size: 2.4rem;
-        color: var(--accent);
+        /* Remove the permanent accent color to make it behave like other icons */
     }
 
     /* Hide spans (text) on mobile */
@@ -974,6 +980,11 @@ section p {
     .nav {
         padding: 0;
     }
+    
+    /* Ensure chevron stays centered in text on tablets */
+    .move-down {
+        top: 74%; /* Same position as other screen sizes */
+    }
 
     /* Restore removed styles */
     section.section-show {
@@ -1000,6 +1011,25 @@ section p {
     .desktop-logo {
         height: 2rem;
     }
+    
+    /* Hide search bar on mobile */
+    .search {
+        display: none;
+    }
+    
+    /* Navbar optimization for mobile */
+    header {
+        padding: 10px var(--header-padding-mobile);
+        height: 60px; /* Reduce overall navbar height */
+    }
+    
+    /* Adjust the navigation to fill the available space (without search bar) */
+    .nav {
+        width: calc(100% - 80px); /* Account for logo width and some padding */
+        margin-left: auto; /* Push to the right, next to logo */
+        display: flex;
+        justify-content: space-between; /* Evenly distribute items */
+    }
 
     /* Update for smaller screens */
     .corner-map {
@@ -1009,15 +1039,6 @@ section p {
     }
 
     /* Adjust icon sizes */
-    .nav li a ion-icon {
-        font-size: 2rem;
-    }
-
-    /* Adjust width for smaller screens while keeping Bride & Groom centered */
-    .nav {
-        width: 90%;
-    }
-
     .nav li a ion-icon {
         font-size: 2rem;
     }
@@ -1065,15 +1086,13 @@ section p {
 
     .nav li a {
         font-size: 0.7rem;
-    }
-
-    .nav li a ion-icon {
-        font-size: 2rem;
+        padding: 5px 2px; /* Reduce padding to save space */
     }
 
     /* Remove any offset margins */
     .nav {
-        margin: 0 auto;
+        margin-left: auto; /* Keep this to position nav after logo */
+        padding: 0;
     }
 
     /* Handle "Bride & Groom" text */
@@ -1100,6 +1119,10 @@ section p {
         width: 45vw;
         height: 45vw;
     }
+
+    .move-down {
+        top: 74%; /* Maintain the same relative position on mobile */
+    }
 }
 
 /* Very small phones */
@@ -1109,15 +1132,21 @@ section p {
     .desktop-logo {
         height: 1.8rem;
     }
+    
+    /* Navbar optimization for very small screens */
+    header {
+        height: 55px; /* Slightly smaller for very small screens */
+        padding: 8px var(--header-padding-mobile); /* Further reduce padding */
+    }
 
     /* Adjust icon sizes */
     .nav li a ion-icon {
         font-size: 1.8rem;
     }
 
-    /* Ensure navigation fills most of the space */
+    /* Ensure navigation fills available space (without search) */
     .nav {
-        width: 95%;
+        width: calc(100% - 70px); /* Slightly less space for smaller screens */
     }
 
     .nav li a ion-icon {
@@ -1129,13 +1158,9 @@ section p {
         font-size: 2rem;
     }
 
-    header {
-        padding: 10px var(--header-padding-mobile);
-    }
-
     /* Navigation specific styles */
     .nav li a {
-        padding: 6px 2px;
+        padding: 4px 2px;
         font-size: 0.6rem;
     }
 
@@ -1157,10 +1182,15 @@ section p {
         height: 200px;
     }
 
-    .move-down ion-icon {
-        font-size: 2.5em;
+    .move-down {
+        top: 74%; /* Maintain the same relative position on very small screens */
     }
 
+    .move-down ion-icon {
+        font-size: 2.5em;
+        /* Only change font size, position is handled by parent */
+    }
+    
     .bg-slide .content h1 {
         font-size: 2.5em;
     }

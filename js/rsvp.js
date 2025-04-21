@@ -55,49 +55,21 @@ const invitationDatabase = {
   },
 };
 
-/*
-  Helper function to build the allowed events checkboxes.
-  Call this function after validating the invitation (in your invitation validation code)
-  with the invitation object that includes an "allowedEvents" array.
-  
-  Example:
-    const invitation = {
-      firstName: "John",
-      lastName: "Smith",
-      allowedEvents: ["Sahil's Grah Shanti Pithi", "Bhomis Grah Shanti Pithi", "The Wedding"],
-      maxGuests: 5
-    };
-    populateEventCheckboxes(invitation);
-*/
-function populateEventCheckboxes(invitation) {
-  const eventsDiv = document.getElementById("rsvp-events");
-  eventsDiv.innerHTML = ""; // Clear any previous content
-  invitation.allowedEvents.forEach(eventName => {
-    const checkboxContainer = document.createElement("div");
-    checkboxContainer.className = "form-check";
-    checkboxContainer.innerHTML = `
-      <input class="form-check-input" type="checkbox" value="${eventName}" id="event-${eventName.replace(/\s+/g, '')}" checked>
-      <label class="form-check-label" for="event-${eventName.replace(/\s+/g, '')}">
-        ${eventName}
-      </label>
-    `;
-    eventsDiv.appendChild(checkboxContainer);
-  });
-}
-//commenting so itll let me commit
-// Function to validate invitation code against database
-async function validateInvitation(firstName, lastName, code) {
+// Store the validated invitation for later use
+let validatedInvitation = null;
+
+// Function to validate invitation code against database - now only checks last name
+async function validateInvitation(lastName, code) {
   if (devMode) {
     // Local development mode - check against dummy database
     // For dev mode, convert to uppercase for case-insensitive comparison
     const uppercaseCode = code.toUpperCase();
     if (invitationDatabase.hasOwnProperty(uppercaseCode)) {
       const invitation = invitationDatabase[uppercaseCode];
-      if (invitation.firstName.toLowerCase() === firstName.toLowerCase() &&
-          invitation.lastName.toLowerCase() === lastName.toLowerCase()) {
+      if (invitation.lastName.toLowerCase() === lastName.toLowerCase()) {
         return { valid: true, invitation };
       } else {
-        return { valid: false, error: "Name does not match our records for this invitation code." };
+        return { valid: false, error: "Last name does not match our records for this invitation code." };
       }
     } else {
       return { valid: false, error: "Invalid invitation code. Please try again." };
@@ -117,15 +89,14 @@ async function validateInvitation(firstName, lastName, code) {
         // Convert maxGuests to number if it's a string
         invitation.maxGuests = parseInt(invitation.maxGuests, 10);
         
-        if (invitation.firstName.toLowerCase() === firstName.toLowerCase() &&
-            invitation.lastName.toLowerCase() === lastName.toLowerCase()) {
+        if (invitation.lastName.toLowerCase() === lastName.toLowerCase()) {
           return { valid: true, invitation };
         } else {
-          console.log("Name mismatch:", {
-            expected: { firstName: invitation.firstName, lastName: invitation.lastName },
-            received: { firstName, lastName }
+          console.log("Last name mismatch:", {
+            expected: { lastName: invitation.lastName },
+            received: { lastName }
           });
-          return { valid: false, error: "Name does not match our records for this invitation code." };
+          return { valid: false, error: "Last name does not match our records for this invitation code." };
         }
       } else {
         console.log("No invitation found for code:", code);
@@ -163,7 +134,6 @@ async function submitRSVP(rsvpData) {
 document.getElementById("rsvp-validation-form").addEventListener("submit", async function(e) {
   e.preventDefault();
   
-  const firstName = document.getElementById("rsvp-first-name").value.trim();
   const lastName = document.getElementById("rsvp-last-name").value.trim();
   const code = document.getElementById("invitation-code").value.trim();
   const errorDiv = document.getElementById("validation-error");
@@ -175,31 +145,67 @@ document.getElementById("rsvp-validation-form").addEventListener("submit", async
   submitButton.textContent = "Validating...";
   
   // Validate the invitation
-  const result = await validateInvitation(firstName, lastName, code);
+  const result = await validateInvitation(lastName, code);
   
   // Reset button
   submitButton.disabled = false;
   submitButton.textContent = originalButtonText;
   
   if (result.valid) {
-    // Populate RSVP Details form
-    document.getElementById("rsvp-full-name").value = `${result.invitation.firstName} ${result.invitation.lastName}`;
+    // Store the validated invitation for later use
+    validatedInvitation = result.invitation;
     
-    // Set maximum allowed guests
-    const guestInput = document.getElementById("rsvp-guests");
-    guestInput.setAttribute("max", result.invitation.maxGuests);
-    
-    // Build allowed events checkboxes
-    populateEventCheckboxes(result.invitation);
-    
-    // Hide validation form and show RSVP details form
+    // Hide validation form and show attendance selection form
     document.getElementById("rsvp-validation-form").style.display = "none";
-    document.getElementById("rsvp-details-form").style.display = "block";
+    document.getElementById("rsvp-attendance-form").style.display = "block";
     errorDiv.style.display = "none";
   } else {
     // Show error message
     errorDiv.textContent = result.error;
     errorDiv.style.display = "block";
+  }
+});
+
+// Handle the attendance selection form
+document.getElementById("rsvp-attendance-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+  
+  const attendingYes = document.getElementById("attending-yes").checked;
+  const attendingNo = document.getElementById("attending-no").checked;
+  
+  // Hide the attendance form
+  document.getElementById("rsvp-attendance-form").style.display = "none";
+  
+  if (attendingYes) {
+    // Show the details form if attending
+    // Set maximum allowed guests
+    const guestInput = document.getElementById("rsvp-guests");
+    guestInput.setAttribute("max", validatedInvitation.maxGuests);
+    
+    // Show RSVP details form
+    document.getElementById("rsvp-details-form").style.display = "block";
+  } else if (attendingNo) {
+    // Submit the decline RSVP and show thank you message
+    const declineData = {
+      lastName: validatedInvitation.lastName,
+      firstName: validatedInvitation.firstName,
+      invitationCode: document.getElementById("invitation-code").value.trim(),
+      attending: false,
+      timestamp: new Date().toISOString()
+    };
+    
+    // Submit the decline to Firebase
+    submitRSVP(declineData);
+    
+    // Show the decline thank you message
+    document.getElementById("rsvp-decline").style.display = "block";
+    
+    // Reset the forms after a delay to allow the user to see the message
+    setTimeout(() => {
+      document.getElementById("rsvp-decline").style.display = "none";
+      document.getElementById("rsvp-validation-form").reset();
+      document.getElementById("rsvp-validation-form").style.display = "block";
+    }, 5000);
   }
 });
 
@@ -213,7 +219,7 @@ document.getElementById("rsvp-details-form").addEventListener("submit", async fu
   
   // Validate guest count
   if (guestCount > maxGuests) {
-    guestError.textContent = `You can only bring up to ${maxGuests - 1} additional guest(s) (including yourself, the maximum allowed is ${maxGuests}).`;
+    guestError.textContent = `You can only bring up to ${maxGuests} guests (including yourself, excluding children under 10).`;
     guestError.style.display = "block";
     return;
   } else {
@@ -224,11 +230,14 @@ document.getElementById("rsvp-details-form").addEventListener("submit", async fu
   const rsvpData = {
     fullName: document.getElementById("rsvp-full-name").value,
     email: document.getElementById("rsvp-email").value,
-    invitedEvents: Array.from(document.querySelectorAll("#rsvp-events input[type=checkbox]"))
-                    .filter(cb => cb.checked)
-                    .map(cb => cb.value),
+    lastName: validatedInvitation.lastName,
+    firstName: validatedInvitation.firstName,
+    invitedEvents: ["The Wedding"], // Always set to Wedding only
     guestCount: guestCount,
     invitationCode: document.getElementById("invitation-code").value.trim(),
+    attending: true,
+    arrivalDate: document.getElementById("arrival-date").value,
+    departureDate: document.getElementById("departure-date").value,
     notes: document.getElementById("rsvp-notes").value.trim(),
     timestamp: new Date().toISOString()
   };

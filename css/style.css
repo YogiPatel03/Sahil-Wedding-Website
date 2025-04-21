@@ -722,16 +722,38 @@ section p {
 }
 
 .RSVP {
-    background-color: var(--background-light);
+    background-color: #ededed;
+    padding: 80px 0 100px 0;
+}
+
+.RSVP .image-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 600px;
+}
+
+.RSVP .image-column img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.RSVP .form-column {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 600px;
 }
 
 .RSVP form {
-    background: #fff;
-    padding: 30px;
+    background-color: white;
+    padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(95, 70, 56, 0.1);
-    width: 100%;
-    border-top: 3px solid var(--accent);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .RSVP button {
@@ -1315,4 +1337,21 @@ section p {
     height: 100%;
     object-fit: cover;
     transition: all 0.5s ease;
+}
+
+/* Responsive adjustments for the RSVP section */
+@media (max-width: 767px) {
+    .RSVP .image-column {
+        margin-bottom: 30px;
+        min-height: 400px;
+    }
+    
+    .RSVP .form-column {
+        padding: 25px;
+        min-height: auto;
+    }
+    
+    .RSVP form {
+        padding: 25px;
+    }
 }

@@ -803,9 +803,9 @@ section p {
     /* Make all nav items the same base width */
     .nav li {
         flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
         position: relative;
     }
 

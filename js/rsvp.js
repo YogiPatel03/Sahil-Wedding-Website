@@ -173,7 +173,7 @@ async function submitRSVP(rsvpData, isUpdate = false) {
         console.log("RSVP updated successfully");
       } else {
         // Create new document
-        await addDoc(collection(db, "rsvps"), rsvpData);
+      await addDoc(collection(db, "rsvps"), rsvpData);
         console.log("RSVP submitted successfully");
       }
       return { success: true };

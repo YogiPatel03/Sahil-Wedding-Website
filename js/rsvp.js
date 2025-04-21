@@ -370,9 +370,13 @@ document.getElementById("rsvp-details-form").addEventListener("submit", async fu
     if (existingRsvpDoc) {
       successHeading.textContent = "Your RSVP has been updated!";
       document.getElementById("rsvp-success-confirmation").textContent = "Your updated information has been saved.";
+      // Hide accommodation info for updates since they likely already saw it
+      document.querySelector('#rsvp-success p:nth-of-type(2)').style.display = "none";
     } else {
       successHeading.textContent = "Thank you for your RSVP!";
-      document.getElementById("rsvp-success-confirmation").textContent = "A confirmation email has been sent to your email address.";
+      document.getElementById("rsvp-success-confirmation").textContent = "We're so excited you'll be joining us!";
+      // Show accommodation info for new submissions
+      document.querySelector('#rsvp-success p:nth-of-type(2)').style.display = "block";
     }
     
     // Reset the forms after a delay to allow the user to see the success message

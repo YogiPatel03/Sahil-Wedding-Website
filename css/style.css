@@ -1,6 +1,7 @@
 /* style.css */
 /* Import */
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 /* General Global Setting */
 * {
@@ -218,10 +219,10 @@ header.active {
 }
 
 .bg-slide .content p {
-    font-family: 'Great Vibes', cursive;
-    font-weight: 200;
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-style: italic;
     font-size: clamp(1em, 2vw, 1.5em);
-    /* Responsive font size */
     letter-spacing: 1px;
     color: var(--peach-text);
 }
@@ -436,15 +437,13 @@ header.active {
 }
 
 .lead svg {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Playfair Display', serif;
     position: relative;
     z-index: 1100;
     fill: var(--peach-text);
     height: auto;
     width: 90%;
-    /* Use percentage width instead of fixed width */
     max-width: 500px;
-    /* Maximum width to prevent stretching on wide screens */
     letter-spacing: 2px;
 }
 
@@ -1354,4 +1353,52 @@ section p {
     .RSVP form {
         padding: 25px;
     }
+}
+
+/* Update RSVP headings to Playfair Display */
+.RSVP h1, 
+.RSVP h4,
+.RSVP form h4,
+#rsvp-success h4,
+#rsvp-decline h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+}
+
+/* Wedding invitation container and image styling */
+.wedding-invite-container {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 90%;
+}
+
+.wedding-invite-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  max-height: 1000px;
+  margin: 0 auto 50px;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .wedding-invite-container {
+    max-width: 100%;
+  }
+  
+  .wedding-invite-img {
+    max-width: 100%;
+    max-height: 800px;
+    width: auto;
+    margin: 0 auto 30px;
+  }
+}
+
+/* Center the RSVP form elements */
+.form-column {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

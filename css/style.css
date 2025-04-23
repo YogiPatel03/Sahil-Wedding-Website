@@ -1475,32 +1475,35 @@ section p {
 }
 
 .registry-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
 }
 
-.registry-btn {
-  display: inline-block;
-  padding: 12px 30px;
-  background-color: var(--champagne);
-  color: var(--text-dark);
-  text-decoration: none;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  border: 1px solid var(--secondary);
+/* New styles for the single registry button */
+.registry-main-btn {
+    background-color: var(--champagne); /* Keep original background */
+    border: 1px solid var(--secondary); /* Match RSVP border style (using secondary as base border) */
+    color: var(--text-dark);
+    padding: 10px 20px; /* Match RSVP padding */
+    transition: all 0.3s ease; /* Match RSVP transition */
+    font-weight: 500; /* Match RSVP font-weight */
+    font-family: 'Playfair Display', serif; /* Match old registry button font */
+    font-style: italic; /* Match old registry button font style */
+    border-radius: 8px; /* Match RSVP button border-radius */
+    width: auto; /* Let the button size itself */
+    min-width: 200px; /* Give it a reasonable min-width */
 }
 
-.registry-btn:hover {
-  background-color: var(--accent);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(165, 140, 133, 0.2);
-  color: var(--text-dark);
+.registry-main-btn:hover {
+    background-color: var(--primary); /* Match RSVP hover background */
+    color: #fff; /* Match RSVP hover text color */
+    transform: translateY(-3px); /* Match RSVP hover transform */
+    box-shadow: 0 5px 15px rgba(165, 140, 133, 0.3); /* Match RSVP hover shadow */
+    border-color: var(--primary); /* Match hover background */
 }
 
 @media (max-width: 768px) {
@@ -1545,9 +1548,11 @@ section p {
     top: 0;
   }
   
-  .registry-btn {
+  /* Style the new button for small mobile */
+  .registry-main-btn {
     width: 80%;
-    padding: 10px 20px;
+    max-width: 280px;
+    padding: 10px 15px;
   }
 }
 
@@ -1609,7 +1614,7 @@ section p {
     align-items: center;
   }
   
-  .registry-btn {
+  .registry-main-btn {
     width: 80%;
     max-width: 280px;
   }

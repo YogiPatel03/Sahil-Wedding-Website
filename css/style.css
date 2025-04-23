@@ -11,20 +11,22 @@
 }
 
 :root {
-    --primary: #5f4638;
-    /* Dark brown */
-    --secondary: #78635a;
-    /* Softer medium brown */
-    --accent: #ffc4a8;
-    /* Peach/coral color */
-    --background-light: #fff7f0;
-    /* Light cream background */
-    --text-dark: #3a2d25;
-    /* Very dark brown for text */
-    --title-brown: #6b5144;
-    /* Soft brown for title text */
-    --peach-text: #f9c3a9;
-    /* Peach/pinkish color from the first screenshot */
+    --primary: #A58C85;
+    /* Warm Taupe - for depth, headings, contrast */
+    --secondary: #C9A9A6;
+    /* Dusty Mauve - for buttons, highlights */
+    --accent: #E8C7C8;
+    /* Muted Blush Pink - primary, backgrounds, accents */
+    --background-light: #FDFBF6;
+    /* Ivory - main background / body content */
+    --text-dark: #4B4B4B;
+    /* Graphite Gray - for text */
+    --title-brown: #A58C85;
+    /* Warm Taupe - for heading text */
+    --peach-text: #E8C7C8;
+    /* Muted Blush Pink - for highlighted text */
+    --champagne: #F6E2C5;
+    /* Champagne - for cards, overlays */
     --header-padding-desktop: 100px;
     --header-padding-tablet: 50px;
     --header-padding-mobile: 20px;
@@ -41,7 +43,7 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     /* Changed from hidden to allow scrolling but prevent horizontal overflow */
-    color: var(--secondary);
+    color: var(--text-dark);
 }
 
 body.menu-open {
@@ -61,15 +63,15 @@ header {
     padding: 20px var(--header-padding-desktop);
     background: transparent;
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(90, 61, 43, 0.2);
-    /* Updated border color */
+    border-bottom: 1px solid rgba(165, 140, 133, 0.2);
+    /* Updated border color to match Warm Taupe */
     transition: 1s;
     z-index: 1300;
 }
 
 header.active {
     background: var(--background-light);
-    box-shadow: 0 0 50px rgba(95, 70, 56, 0.15);
+    box-shadow: 0 0 50px rgba(165, 140, 133, 0.15);
 }
 
 /* Default styles for all devices */
@@ -96,7 +98,7 @@ header.active {
 }
 
 .menu {
-    color: #000000;
+    color: var(--text-dark);
     font-size: 2em;
     transition: 0.5s;
     position: relative;
@@ -133,7 +135,7 @@ header.active {
 }
 
 .nav li a {
-    color: #000000;
+    color: var(--text-dark);
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -180,7 +182,7 @@ header.active {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(253, 251, 246, 0.25);
 }
 
 .bg-slide {
@@ -345,7 +347,7 @@ header.active {
 
 .slide-loader li a {
     text-decoration: none;
-    color: var(--secondary);
+    color: var(--primary);
     font-size: clamp(1.5em, 2vw, 2em);
     /* Responsive font size */
     font-weight: 800;
@@ -369,7 +371,7 @@ header.active {
     left: -70%;
     width: 100px;
     height: 2px;
-    background: var(--secondary);
+    background: var(--primary);
     display: none;
     /* Hide on smaller screens */
 }
@@ -397,8 +399,7 @@ header.active {
     top: -120%;
     height: 100px;
     width: 2px;
-    background: #111111;
-    /* Changed to dark black */
+    background: var(--text-dark);
 }
 
 .share p {
@@ -406,14 +407,12 @@ header.active {
     text-transform: uppercase;
     font-weight: 300;
     letter-spacing: 1px;
-    color: #111111;
-    /* Changed to dark black */
+    color: var(--text-dark);
 }
 
 .share a {
     text-decoration: none;
-    color: #111111;
-    /* Changed to dark black */
+    color: var(--text-dark);
 }
 
 .share a:hover {
@@ -516,7 +515,7 @@ section h4 {
 
 section p {
     font-weight: 300;
-    color: var(--secondary);
+    color: var(--text-dark);
     letter-spacing: 1px;
     margin-bottom: 40px;
     font-size: clamp(0.9em, 1.2vw, 1em);
@@ -557,7 +556,7 @@ section p {
 /* Styles for the main hotel image */
 .main-hotel-img {
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(95, 70, 56, 0.15);
+    box-shadow: 0 5px 15px rgba(165, 140, 133, 0.15);
     transition: all 0.3s ease;
     display: block;
     width: 100%;
@@ -575,7 +574,7 @@ section p {
     right: 10px;
     bottom: -50px;
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(95, 70, 56, 0.2);
+    box-shadow: 0 5px 15px rgba(165, 140, 133, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -609,7 +608,7 @@ section p {
 .section-btn {
     position: relative;
     text-decoration: none;
-    color: var(--secondary);
+    color: var(--primary);
     text-transform: uppercase;
     font-weight: 300;
     letter-spacing: 1px;
@@ -620,7 +619,7 @@ section p {
 }
 
 .section-btn:hover {
-    color: var(--accent);
+    color: var(--secondary);
 }
 
 .section-btn::before {
@@ -636,14 +635,14 @@ section p {
 
 .section-btn:hover::before {
     left: 20%;
-    background: var(--accent);
+    background: var(--secondary);
 }
 
 /* Events Section */
 .Events .card {
     transition: all 0.3s ease;
     border: none;
-    box-shadow: 0 5px 15px rgba(95, 70, 56, 0.1);
+    box-shadow: 0 5px 15px rgba(165, 140, 133, 0.1);
     height: 100%;
     background-color: #fff;
     border-radius: 8px;
@@ -654,7 +653,7 @@ section p {
 
 .Events .card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(95, 70, 56, 0.2);
+    box-shadow: 0 15px 30px rgba(165, 140, 133, 0.2);
 }
 
 .Events .img-box {
@@ -721,7 +720,7 @@ section p {
 }
 
 .RSVP {
-    background-color: #ededed;
+    background-color: var(--champagne);
     padding: 80px 0 100px 0;
 }
 
@@ -737,7 +736,7 @@ section p {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(165, 140, 133, 0.1);
 }
 
 .RSVP .form-column {
@@ -752,17 +751,17 @@ section p {
     background-color: white;
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(165, 140, 133, 0.1);
 }
 
 .RSVP button {
-    background-color: var(--accent);
+    background-color: var(--secondary);
     border: none;
     padding: 10px 20px;
     transition: all 0.3s ease;
     width: 100%;
     /* Full width on mobile */
-    color: var(--text-dark);
+    color: var(--background-light);
     font-weight: 500;
 }
 
@@ -770,13 +769,13 @@ section p {
     background-color: var(--primary);
     color: #fff;
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(95, 70, 56, 0.3);
+    box-shadow: 0 5px 15px rgba(165, 140, 133, 0.3);
 }
 
 /* Add some accent color to form inputs when focused */
 .RSVP form .form-control:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 0.25rem rgba(255, 196, 168, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(232, 199, 200, 0.25);
 }
 
 /* Update mobile-specific elements */
@@ -1227,7 +1226,7 @@ section p {
 
 /* Bride & Groom Section Styles */
 .Bride\&Groom {
-    background: #ffffff;
+    background: #fff;
 }
 
 .Bride\&Groom .container-fluid {
@@ -1278,7 +1277,7 @@ section p {
 .Bride\&Groom .title-divider {
     width: 100%;
     height: 1px;
-    background: #000;
+    background: var(--primary);
     margin: 10px 0 60px 0;
 }
 
@@ -1297,7 +1296,7 @@ section p {
     width: 140px;
     /* Slightly larger than name */
     height: 1px;
-    background: #000;
+    background: var(--secondary);
     margin: 5px auto 15px;
 }
 
@@ -1305,7 +1304,7 @@ section p {
 .Bride\&Groom .groom-desc {
     font-size: 0.9em;
     line-height: 1.7;
-    color: var(--secondary);
+    color: var(--text-dark);
     width: 100%;
     font-style: italic;
     text-align: center;
@@ -1315,7 +1314,7 @@ section p {
 .Bride\&Groom .name-divider {
     width: 100%;
     height: 1px;
-    background: #000;
+    background: var(--secondary);
     margin: 30px 0;
 }
 
@@ -1363,6 +1362,7 @@ section p {
 #rsvp-decline h4 {
     font-family: 'Playfair Display', serif;
     font-weight: 500;
+    color: var(--title-brown);
 }
 
 /* Wedding invitation container and image styling */
@@ -1376,7 +1376,7 @@ section p {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgba(165, 140, 133, 0.25);
   max-height: 1000px;
   margin: 0 auto 50px;
   display: block;
@@ -1401,4 +1401,15 @@ section p {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+/* Style for venue address with line break */
+.Events .card-text br {
+  display: block;
+  content: "";
+  margin-top: 5px;
+}
+
+.Events .card-text {
+  line-height: 1.6;
 }

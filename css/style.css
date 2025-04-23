@@ -218,6 +218,7 @@ header.active {
     text-transform: uppercase;
     color: var(--peach-text);
     line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add drop shadow to make text more readable */
 }
 
 .bg-slide .content p {
@@ -227,6 +228,7 @@ header.active {
     font-size: clamp(1em, 2vw, 1.5em);
     letter-spacing: 1px;
     color: var(--peach-text);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Add subtle drop shadow */
 }
 
 .bg-slide.active .content {
@@ -873,6 +875,12 @@ section p {
         padding-top: 20px;
         padding-bottom: 30px;
     }
+
+    section h1 {
+        font-size: clamp(2.2em, 8vw, 3em);
+        margin-bottom: 40px; /* Less margin bottom on mobile */
+        /* This will affect all sections including Registry */
+    }
 }
 
 /* Add some accent to the search bar */
@@ -1412,4 +1420,208 @@ section p {
 
 .Events .card-text {
   line-height: 1.6;
+}
+
+/* Special positioning for slide-3 to move subject's face up */
+.bg-slide.slide-3 .circle.bg img {
+    object-position: center 60%; /* Move image up by positioning at 25% from top instead of center */
+}
+
+/* Registry Section */
+.Registry {
+  background-color: var(--background-light);
+  padding: 80px 0 100px 0;
+}
+
+.Registry h1 {
+  position: relative;
+}
+
+.registry-divider {
+  width: 200px;
+  height: 2px;
+  background: var(--accent);
+  margin: -140px auto 80px;
+  position: relative;
+}
+
+.registry-flower-container {
+  margin: 0 auto 20px;
+  max-width: 150px;
+}
+
+.registry-flower {
+  width: 100%;
+  height: auto;
+  opacity: 0.8;
+}
+
+.registry-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5em;
+  color: var(--title-brown);
+  margin: 20px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.registry-message {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1em, 2vw, 1.1em); /* Responsive font size */
+  color: var(--text-dark);
+  margin: 30px auto;
+  max-width: 90%;
+  line-height: 1.7;
+}
+
+.registry-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.registry-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: var(--champagne);
+  color: var(--text-dark);
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  border: 1px solid var(--secondary);
+}
+
+.registry-btn:hover {
+  background-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(165, 140, 133, 0.2);
+  color: var(--text-dark);
+}
+
+@media (max-width: 768px) {
+  .registry-buttons {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .registry-divider {
+    width: 120px;
+    margin: 20px auto 30px;
+    top: 0;
+  }
+  
+  .Registry {
+    padding: 120px 0 60px 0;
+  }
+  
+  .registry-message {
+    font-size: 1em;
+    max-width: 100%;
+    padding: 0 15px;
+    margin: 20px auto;
+  }
+  
+  .registry-flower-container {
+    max-width: 120px;
+    margin-bottom: 10px;
+  }
+  
+  section.Registry h1 {
+    margin-bottom: 20px;
+  }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 480px) {
+  .registry-divider {
+    width: 100px;
+    margin: 15px auto 20px;
+    top: 0;
+  }
+  
+  .registry-btn {
+    width: 80%;
+    padding: 10px 20px;
+  }
+}
+
+/* Tablet adjustments */
+@media (max-width: 991px) {
+  .registry-divider {
+    margin: -100px auto 60px;
+  }
+}
+
+/* Mobile specific styles for Registry section */
+@media (max-width: 767px) {
+  .Registry h1 {
+    margin-bottom: 50px;
+  }
+  
+  .registry-message {
+    margin: 20px auto;
+    padding: 0 15px;
+  }
+}
+
+/* EXTREME MOBILE FIXES FOR REGISTRY */
+@media (max-width: 767px) {
+  /* Fix Registry section spacing */
+  .Registry {
+    padding-top: 150px !important;
+    padding-bottom: 60px;
+  }
+  
+  /* Fix Registry title */
+  .Registry h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-top: 0;
+    font-size: 2.6em;
+    position: relative;
+    z-index: 5;
+  }
+  
+  /* Fix divider line */
+  .registry-divider {
+    width: 120px;
+    margin: 0 auto 40px;
+    position: relative;
+    top: 0;
+    z-index: 5;
+  }
+  
+  /* Push content down */
+  .registry-flower-container {
+    margin-top: 30px;
+  }
+  
+  /* Ensure buttons are centered */
+  .registry-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .registry-btn {
+    width: 80%;
+    max-width: 280px;
+  }
+}
+
+/* Very small mobile devices */
+@media (max-width: 380px) {
+  .Registry {
+    padding-top: 180px !important;
+  }
+  
+  .Registry h1 {
+    font-size: 2.2em;
+  }
 }

@@ -1,12 +1,87 @@
-// toggles background active
+// Track ongoing slide transitions
+let slideTransitionInProgress = false;
+let transitionTimeouts = [];
+
+// Initialize slide index at load
+let currentSlideIndex = 0;
+
+// Clear all transition timeouts
+const clearTransitionTimeouts = () => {
+    transitionTimeouts.forEach(timeout => clearTimeout(timeout));
+    transitionTimeouts = [];
+};
+
+// toggles background active with improved transition handling
 const slideNavigator = name => {
     let slides = document.querySelectorAll('.bg-slide');
+    
+    // Find current active and next slide
+    const currentActive = document.querySelector('.bg-slide.active');
+    const nextSlide = document.querySelector(`.bg-slide.${name}`);
+    
+    if (currentActive === nextSlide) return; // Don't do anything if clicking the same slide
+    
+    // If a transition is in progress, clear all timeouts
+    if (slideTransitionInProgress) {
+        clearTransitionTimeouts();
+        
+        // Immediately complete any ongoing transitions
+        slides.forEach(slide => {
+            if (slide !== nextSlide) {
+                slide.classList.remove('active');
+                slide.style.opacity = '';
+                slide.style.transition = '';
+            }
+        });
+    }
+    
+    // Mark that we're starting a transition
+    slideTransitionInProgress = true;
+    
+    // First fade out all slides except the target one
     slides.forEach(slide => {
-        slide.classList.remove('active');
-        if (slide.classList.contains(name)) {
-            slide.classList.add('active');
+        if (slide !== nextSlide) {
+            // Set transition to 'out' state
+            slide.style.transition = 'opacity 0.8s ease-out';
+            slide.style.opacity = '0';
+            
+            // Remove active class after transition
+            const timeout = setTimeout(() => {
+                slide.classList.remove('active');
+                slide.style.opacity = ''; // Reset inline style
+                slide.style.transition = ''; // Reset inline style
+            }, 800);
+            
+            transitionTimeouts.push(timeout);
         }
     });
+    
+    // Add active class to the target slide
+    nextSlide.classList.add('active');
+    
+    // Ensure a smooth entrance animation
+    requestAnimationFrame(() => {
+        const timeout = setTimeout(() => {
+            nextSlide.style.transition = 'opacity 1.2s ease-in';
+            nextSlide.style.opacity = '1';
+            
+            // Mark transition as complete after animation finishes
+            const completionTimeout = setTimeout(() => {
+                slideTransitionInProgress = false;
+            }, 1200);
+            
+            transitionTimeouts.push(completionTimeout);
+        }, 50);
+        
+        transitionTimeouts.push(timeout);
+    });
+    
+    // Safety fallback - ensure transition is marked complete after a maximum time
+    const fallbackTimeout = setTimeout(() => {
+        slideTransitionInProgress = false;
+    }, 2500);
+    
+    transitionTimeouts.push(fallbackTimeout);
 };
 
 // toggle mobile menu
@@ -64,9 +139,13 @@ window.addEventListener('load', () => {
 // switch background for banner
 window.addEventListener('load', () => {
     const slideBtnList = document.querySelectorAll(".slide-btn");
-    slideBtnList.forEach(btn => {
+    slideBtnList.forEach((btn, index) => {
         btn.addEventListener('click', function (e) {
             e.preventDefault();
+            
+            // Update current index when clicked
+            currentSlideIndex = index;
+            
             slideBtnList.forEach(el => {
                 el.classList.remove('active');
             });

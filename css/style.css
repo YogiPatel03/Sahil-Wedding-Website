@@ -182,7 +182,8 @@ header.active {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(253, 251, 246, 0.25);
+    background: rgba(253, 251, 246, 0.2);
+    z-index: 500;
 }
 
 .bg-slide {
@@ -195,30 +196,42 @@ header.active {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    opacity: 0;
+    /* Ensure slides always exist in DOM but are invisible until active */
+    visibility: visible;
+    transition: opacity 1.2s ease-in-out;
+    z-index: 100;
 }
 
+.bg-slide.active {
+    opacity: 1;
+    z-index: 200;
+}
+
+/* Enhance slide content transitions */
 .bg-slide .content {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: scale(0) translate(-50%, -50%);
+    transform: scale(0.95) translate(-50%, -50%);
     width: 60%;
     max-width: 800px;
     z-index: 1100;
-    transition: ease-in-out 3s;
+    transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
     opacity: 0;
-    visibility: hidden;
+    /* Display content but keep invisible until active */
+    visibility: visible;
     text-align: center;
-    /* Ensure text is centered */
 }
 
+/* Subtle text shadow for better readability */
 .bg-slide .content h1 {
     font-size: clamp(3em, 8vw, 8em);
     /* Responsive font size */
     text-transform: uppercase;
     color: var(--peach-text);
     line-height: 1.2;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add drop shadow to make text more readable */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .bg-slide .content p {
@@ -228,9 +241,10 @@ header.active {
     font-size: clamp(1em, 2vw, 1.5em);
     letter-spacing: 1px;
     color: var(--peach-text);
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Add subtle drop shadow */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+/* Soft transition for slide content */
 .bg-slide.active .content {
     transform: scale(1) translate(-50%, -50%);
     opacity: 1;
@@ -243,10 +257,10 @@ header.active {
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: translate(0, 0) rotateZ(0);
+    transform: translate(0, 0);
     opacity: 0;
     visibility: hidden;
-    transition: 3s;
+    transition: 1.8s cubic-bezier(0.22, 1, 0.36, 1);
     transform-origin: center center;
 }
 
@@ -258,7 +272,8 @@ header.active {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotateZ(0);
+    transform: translate(-50%, -50%);
+    z-index: 150; /* Ensure proper stacking */
 }
 
 .circle.large {
@@ -267,7 +282,7 @@ header.active {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotateZ(0);
+    transform: translate(-50%, -50%);
 }
 
 .circle.small {
@@ -276,9 +291,10 @@ header.active {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotateZ(0);
+    transform: translate(-50%, -50%);
 }
 
+/* Refined circle image styling */
 .circle img {
     position: absolute;
     width: 100%;
@@ -288,6 +304,8 @@ header.active {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: transform 2s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
 }
 
 .circle.bg img {
@@ -296,39 +314,45 @@ header.active {
     height: 100vh;
     object-fit: cover;
     object-position: center;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1.03);
 }
 
-.circle.large img {
-    border-radius: 50%;
-    width: 200%;
-    height: 200%;
-    transform: translate(-50%, -50%);
+/* Elegant subtle zoom for active slides */
+.bg-slide.active .circle.bg img {
+    transform: translate(-50%, -50%) scale(1);
 }
 
-.circle.small img {
-    border-radius: 50%;
-    width: 400%;
-    height: 400%;
-    transform: translate(-50%, -50%);
-}
-
+/* Active states with subtle fade and scale effects */
 .bg-slide.active .circle.bg {
     opacity: 1;
     visibility: visible;
-    transform: translate(-50%, -50%) rotateZ(-360deg);
 }
 
 .bg-slide.active .circle.large {
     opacity: 1;
     visibility: visible;
-    transform: translate(-50%, -50%) rotateZ(720deg);
 }
 
 .bg-slide.active .circle.small {
     opacity: 1;
     visibility: visible;
-    transform: translate(-50%, -50%) rotateZ(-720deg);
+}
+
+/* Subtle entrance animation */
+@keyframes subtle-fade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.03);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Apply the refined animations */
+.bg-slide.active .circle.bg {
+    animation: subtle-fade 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .slide-loader {
@@ -361,9 +385,10 @@ header.active {
 
 .slide-loader li a:hover,
 .slide-loader li a.active {
-    font-size: clamp(3em, 4vw, 4em);
-    /* Responsive font size */
+    font-size: clamp(2.5em, 3.5vw, 3.5em);
+    /* Slightly less dramatic size change */
     color: var(--peach-text);
+    transition: all 0.4s ease;
 }
 
 .slide-loader::before {
@@ -1629,4 +1654,16 @@ section p {
   .Registry h1 {
     font-size: 2.2em;
   }
+}
+
+/* Additional failsafe for slide transitions */
+@keyframes fadeFallback {
+    0%, 100% { opacity: 1; }
+}
+
+/* Apply fallback animation to ensure something is always visible */
+.bg-slide.active {
+    opacity: 1;
+    z-index: 200;
+    animation: fadeFallback 0.1s;
 }

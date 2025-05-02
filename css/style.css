@@ -245,7 +245,7 @@ header:not(.active) .nav li a.active {
     text-transform: uppercase;
     color: var(--peach-text);
     line-height: 1.2;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.6); /* Harsher shadow: increased offset, blur, and opacity */
 }
 
 .bg-slide .content p {
@@ -255,7 +255,7 @@ header:not(.active) .nav li a.active {
     font-size: clamp(1em, 2vw, 1.5em);
     letter-spacing: 1px;
     color: var(--peach-text);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Harsher shadow: increased offset, blur, and opacity */
 }
 
 /* Soft transition for slide content */
@@ -485,6 +485,7 @@ header:not(.active) .nav li a.active {
     width: 90%;
     max-width: 500px;
     letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Harsher shadow */
 }
 
 /* Hide the move-down chevron button */
@@ -1680,4 +1681,69 @@ section p {
     opacity: 1;
     z-index: 200;
     animation: fadeFallback 0.1s;
+}
+
+/* Wedding Date and Location */
+.wedding-date-location {
+  position: absolute; /* Position relative to the banner */
+  bottom: 15%; /* Adjust vertical position as needed */
+  left: 0;
+  right: 0;
+  /* margin-top removed as it's absolutely positioned now */
+  text-align: center;
+  color: var(--peach-text);
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Keep harsh shadow */
+  z-index: 1150; /* Ensure it's above slides but potentially below other fixed UI */
+}
+
+.date-location-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.7rem; /* Adjusted slightly */
+  font-size: 1.35rem; /* Reduced from 1.5rem (approx 10%) */
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.circle-spacer {
+  display: inline-block;
+  width: 0.45rem; /* Reduced slightly */
+  height: 0.45rem; /* Reduced slightly */
+  background-color: var(--peach-text);
+  border-radius: 50%;
+  margin: 0 1rem; /* Kept margin */
+}
+
+.countdown {
+  font-size: 1.15rem; /* Reduced from 1.3rem (approx 10%) */
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+#countdown-days {
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .wedding-date-location {
+    bottom: 20%; /* Adjust mobile vertical position */
+    /* margin-top removed */
+  }
+  
+  .date-location-text {
+    flex-direction: column;
+    font-size: 1.1rem; /* Reduced from 1.2rem (approx 10%) */
+  }
+  
+  .circle-spacer {
+    margin: 0.4rem 0; /* Adjusted mobile spacer margin */
+    display: block;
+  }
+  
+  .countdown {
+    font-size: 1rem; /* Reduced from 1.1rem (approx 10%) */
+    margin-top: 0.4rem;
+  }
 }

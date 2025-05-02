@@ -287,3 +287,25 @@ window.addEventListener('load', () => {
     adjustContentHeight();
     window.addEventListener('resize', adjustContentHeight);
 });
+
+// Wedding Countdown
+window.addEventListener('load', () => {
+    const updateCountdown = () => {
+        const weddingDate = new Date('August 31, 2025 00:00:00').getTime();
+        const now = new Date().getTime();
+        const difference = weddingDate - now;
+        
+        // Calculate days
+        const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
+        
+        // Update the countdown in the DOM
+        const countdownElement = document.getElementById('countdown-days');
+        if (countdownElement) {
+            countdownElement.textContent = days;
+        }
+    };
+    
+    // Update countdown immediately and then daily
+    updateCountdown();
+    setInterval(updateCountdown, 1000 * 60 * 60 * 24); // Update daily
+});

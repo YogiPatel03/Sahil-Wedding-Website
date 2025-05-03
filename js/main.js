@@ -139,26 +139,54 @@ window.addEventListener('load', () => {
 // switch background for banner
 window.addEventListener('load', () => {
     const slideBtnList = document.querySelectorAll(".slide-btn");
-    slideBtnList.forEach((btn, index) => {
-        btn.addEventListener('click', function (e) {
+    
+    // Enhanced click handling for mobile
+    const handleSlideButtonClick = function(e) {
+        e.preventDefault();
+        e.stopPropagation(); // Prevent event bubbling
+        
+        // Get the index of this button
+        const index = Array.from(slideBtnList).indexOf(this);
+        currentSlideIndex = index;
+        
+        // Update UI
+        slideBtnList.forEach(el => {
+            el.classList.remove('active');
+        });
+        this.classList.add('active');
+        
+        // Trigger slide change
+        slideNavigator(this.getAttribute('data-target'));
+    };
+    
+    // Remove any existing event listeners first
+    slideBtnList.forEach(btn => {
+        btn.removeEventListener('click', handleSlideButtonClick);
+        
+        // Add the enhanced click handling
+        btn.addEventListener('click', handleSlideButtonClick);
+        
+        // For mobile, also add touchend event
+        btn.addEventListener('touchend', function(e) {
             e.preventDefault();
-            
-            // Update current index when clicked
-            currentSlideIndex = index;
-            
-            slideBtnList.forEach(el => {
-                el.classList.remove('active');
-            });
-            this.classList.add('active');
-            slideNavigator(this.getAttribute('data-target'));
+            handleSlideButtonClick.call(this, e);
         });
     });
+    
+    // Debug log for mobile
+    console.log("Slide buttons initialized: ", slideBtnList.length);
 });
 
 // activates sections
 const sectionNavigator = name => {
     let sections = document.querySelectorAll('section');
     let header = document.querySelector('header');
+    
+    // Hide slide navigation for mobile when viewing sections
+    const slideLoader = document.querySelector('.slide-loader');
+    if (slideLoader) {
+        slideLoader.style.display = 'none';
+    }
 
     // Smooth scroll to top for mobile
     if (window.innerWidth <= 768) {
@@ -239,6 +267,12 @@ const resetHeader = () => {
     sections.forEach(section => {
         section.classList.remove('section-show');
     });
+    
+    // Show slide navigation when returning to home
+    const slideLoader = document.querySelector('.slide-loader');
+    if (slideLoader) {
+        slideLoader.style.display = '';
+    }
 
     // Clear URL hash
     window.history.pushState(null, null, window.location.pathname);
@@ -309,3 +343,5 @@ window.addEventListener('load', () => {
     updateCountdown();
     setInterval(updateCountdown, 1000 * 60 * 60 * 24); // Update daily
 });
+
+// Gallery functionality removed (no lightbox)

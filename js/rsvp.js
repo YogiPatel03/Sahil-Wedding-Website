@@ -27,33 +27,7 @@ try {
   console.log("Fallback to development mode");
 }
 
-// Dummy invitation database for local testing
-const invitationDatabase = {
-  "WELCOME2025": {
-    firstName: "John",
-    lastName: "Smith",
-    allowedEvents: ["Sahil's Grah Shanti Pithi", "Bhumi's Grah Shanti Pithi", "The Wedding"],
-    maxGuests: 5
-  },
-  "WEDONLY": {
-    firstName: "Alice",
-    lastName: "Johnson",
-    allowedEvents: ["The Wedding"],
-    maxGuests: 2
-  },
-  "DOUBLEFUN": {
-    firstName: "Bob",
-    lastName: "Brown",
-    allowedEvents: ["The Wedding", "Bhumi's Grah Shanti Pithi"],
-    maxGuests: 3
-  },
-  "ALLACCESS": {
-    firstName: "Sahil",
-    lastName: "Smith",
-    allowedEvents: ["Sahil's Grah Shanti Pithi", "Bhumi's Grah Shanti Pithi", "The Wedding"],
-    maxGuests: 8
-  },
-};
+
 
 // Store the validated invitation for later use
 let validatedInvitation = null;
@@ -187,9 +161,11 @@ async function submitRSVP(rsvpData, isUpdate = false) {
   }
 }
 
-// Function to fill form with existing RSVP data
+// Function to populate form with existing RSVP data
 function populateFormWithExistingRSVP() {
   if (!existingRsvpDoc) return;
+  
+  console.log("Populating form with existing RSVP:", existingRsvpDoc);
   
   // Set initial attendance radio button
   if (existingRsvpDoc.attending) {
@@ -207,6 +183,23 @@ function populateFormWithExistingRSVP() {
     document.getElementById("arrival-date").value = existingRsvpDoc.arrivalDate || '';
     document.getElementById("departure-date").value = existingRsvpDoc.departureDate || '';
     document.getElementById("rsvp-notes").value = existingRsvpDoc.notes || '';
+    
+    // Populate new fields if they exist
+    if (existingRsvpDoc.dinnerChoice) {
+      document.getElementById("dinner-choice").value = existingRsvpDoc.dinnerChoice;
+    }
+    
+    // Update to correctly handle grahShantiGuests value of 0
+    console.log("Existing grahShantiGuests:", existingRsvpDoc.grahShantiGuests);
+    console.log("Type of grahShantiGuests:", typeof existingRsvpDoc.grahShantiGuests);
+    
+    if (existingRsvpDoc.grahShantiGuests !== undefined) {
+      console.log("Setting rsvp-gs-guests input to:", existingRsvpDoc.grahShantiGuests);
+      document.getElementById("rsvp-gs-guests").value = existingRsvpDoc.grahShantiGuests;
+      
+      // Verify that the value was set correctly
+      console.log("Input value after setting:", document.getElementById("rsvp-gs-guests").value);
+    }
   }
 }
 
@@ -278,6 +271,24 @@ document.getElementById("rsvp-attendance-form").addEventListener("submit", funct
     const guestInput = document.getElementById("rsvp-guests");
     guestInput.setAttribute("max", validatedInvitation.maxGuests);
     
+    // Check if user is invited to Grah Shanti and show/hide the field accordingly
+    const grahShantiContainer = document.getElementById("grah-shanti-guests-container");
+    if (validatedInvitation.allowedEvents && 
+        Array.isArray(validatedInvitation.allowedEvents) && 
+        validatedInvitation.allowedEvents.includes("Grah Shanti") && 
+        validatedInvitation.allowedEvents.includes("Wedding")) {
+      
+      // Show the Grah Shanti guests field
+      grahShantiContainer.style.display = "block";
+      
+      // Set maximum allowed guests for Grah Shanti
+      const gsGuestInput = document.getElementById("rsvp-gs-guests");
+      gsGuestInput.setAttribute("max", validatedInvitation.maxGuestsGS || validatedInvitation.maxGuests);
+    } else {
+      // Hide the Grah Shanti guests field
+      grahShantiContainer.style.display = "none";
+    }
+    
     // Update heading to indicate if this is an edit
     const formHeading = document.querySelector('#rsvp-details-form h4');
     if (existingRsvpDoc) {
@@ -331,21 +342,64 @@ document.getElementById("rsvp-details-form").addEventListener("submit", async fu
     guestError.style.display = "none";
   }
   
+  // Validate Grah Shanti guest count if applicable
+  const grahShantiContainer = document.getElementById("grah-shanti-guests-container");
+  let grahShantiGuests = null;
+  
+  if (grahShantiContainer.style.display !== "none") {
+    grahShantiGuests = parseInt(document.getElementById("rsvp-gs-guests").value, 10);
+    console.log("Grah Shanti guests input value:", document.getElementById("rsvp-gs-guests").value);
+    console.log("Parsed Grah Shanti guests:", grahShantiGuests);
+    
+    // Check for parsing errors
+    if (isNaN(grahShantiGuests)) {
+      console.error("Error: Grah Shanti guests value could not be parsed as a number");
+      alert("Please enter a valid number for Grah Shanti guests");
+      return;
+    }
+    
+    const maxGSGuests = parseInt(document.getElementById("rsvp-gs-guests").getAttribute("max"), 10);
+    const gsGuestError = document.getElementById("gs-guest-error");
+    
+    if (grahShantiGuests > maxGSGuests) {
+      gsGuestError.textContent = `You can only bring up to ${maxGSGuests} guests to the Grah Shanti event.`;
+      gsGuestError.style.display = "block";
+      return;
+    } else {
+      gsGuestError.style.display = "none";
+    }
+  }
+  
+  // Prepare invitedEvents array based on Grah Shanti attendance
+  let invitedEvents = ["The Wedding"];
+  if (grahShantiGuests !== null && grahShantiGuests > 0) {
+    console.log("Including Grah Shanti in invitedEvents");
+    invitedEvents.push("Grah Shanti");
+  }
+  console.log("Final invitedEvents:", invitedEvents);
+  
   // Prepare RSVP data for submission
   const rsvpData = {
     fullName: document.getElementById("rsvp-full-name").value,
     email: document.getElementById("rsvp-email").value,
     lastName: validatedInvitation.lastName,
     firstName: validatedInvitation.firstName,
-    invitedEvents: ["The Wedding"], // Always set to Wedding only
+    invitedEvents: invitedEvents, // Dynamically set based on Grah Shanti attendance
     guestCount: guestCount,
     invitationCode: document.getElementById("invitation-code").value.trim(),
     attending: true,
     arrivalDate: document.getElementById("arrival-date").value,
     departureDate: document.getElementById("departure-date").value,
+    dinnerChoice: document.getElementById("dinner-choice").value,
     notes: document.getElementById("rsvp-notes").value.trim(),
     timestamp: new Date().toISOString()
   };
+  
+  // Add Grah Shanti guest count if applicable (always include if the field is shown)
+  if (grahShantiGuests !== null) {
+    console.log("Adding grahShantiGuests to RSVP data:", grahShantiGuests);
+    rsvpData.grahShantiGuests = grahShantiGuests;
+  }
   
   // Show loading indication
   const submitButton = this.querySelector("button[type=submit]");

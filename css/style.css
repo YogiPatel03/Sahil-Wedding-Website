@@ -886,8 +886,8 @@ section p {
     position: absolute;
     width: 12vw;
     height: 12vw;
-    right: 10px;
-    bottom: 120px; /* Changed from -50px to place inside the bottom right */
+    left: 10px; /* Changed from right: 10px to left: 10px */
+    bottom: 120px;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(165, 140, 133, 0.2);
     transition: all 0.3s ease;
@@ -1115,7 +1115,7 @@ section p {
         width: 20vw;
         height: 20vw;
         bottom: 30px;
-        right: 10px;
+        left: 10px; /* Changed from right: 10px to left: 10px */
     }
 
     /* Make all nav items the same base width */
@@ -1333,6 +1333,7 @@ section p {
         width: 30vw;
         height: 30vw;
         bottom: 20px;
+        left: 10px; /* Added left positioning to ensure it stays on the left */
     }
 
     /* Adjust icon sizes */
@@ -2620,7 +2621,7 @@ header:not(.active) ~ .banner .wedding-date-location {
         width: 20vw;
         height: 20vw;
         bottom: 30px;
-        right: 10px;
+        left: 10px; /* Changed from right: 10px to left: 10px */
     }
 }
 

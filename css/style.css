@@ -8,13 +8,21 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
+}
+
+/* Font optimization for better cross-device compatibility */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 /* Fix for mobile viewport width issues */
 html, body {
-    width: 100%;
     max-width: 100vw;
     overflow-x: hidden;
+    scroll-behavior: smooth;
     position: relative;
 }
 
@@ -2684,5 +2692,41 @@ header:not(.active) ~ .banner .wedding-date-location {
     /* Add more space between countdown and hashtag */
     .wedding-date-location {
         margin-bottom: 30px !important; /* Add more space below */
+    }
+}
+
+/* Specific fix for iOS devices */
+@supports (-webkit-touch-callout: none) {
+    /* iOS specific styles */
+    .lead {
+        bottom: 5% !important; /* Move even further down on iOS devices */
+    }
+    
+    .lead svg {
+        margin-top: 50px !important; /* More space for hashtag on iOS */
+        height: 70px !important; /* Adjust height on iOS */
+    }
+    
+    /* Add more space between countdown and hashtag */
+    .wedding-date-location {
+        margin-bottom: 30px !important; /* Add more space below */
+    }
+    
+    /* Font rendering fixes for iOS */
+    body {
+        -webkit-text-size-adjust: 100%; /* Prevent iOS text size adjust after orientation change */
+    }
+    
+    /* Fix font weight rendering on iOS */
+    h1, h2, h3, h4, h5, h6, .faq-question, .couple-title, 
+    .bride-name, .groom-name, .whileyourhere-heading, .whileyourhere-subheading {
+        font-weight: 600 !important; /* Force slightly heavier weight for iOS */
+    }
+    
+    /* Fix specific fonts on iOS */
+    .bg-slide .content h1, section h1, section h4, .Events .card-title,
+    .Bride\&Groom .couple-title, .Bride\&Groom .bride-name, 
+    .Bride\&Groom .groom-name, .registry-title {
+        letter-spacing: -0.01em; /* Tighten letter spacing slightly */
     }
 }

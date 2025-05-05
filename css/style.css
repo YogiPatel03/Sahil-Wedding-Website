@@ -2989,24 +2989,75 @@ body:has(section.section-show) .banner .countdown {
 /* Specific adjustment for slide 3 title and body text */
 @media (max-width: 768px) {
   .bg-slide.slide-3 .content h1 {
-    top: calc(15% + 10px) !important; /* Changed back to a reasonable offset */
+    top: calc(15%) !important; /* Move down by 10px from default 15% */
   }
   
   .bg-slide.slide-3 .content p {
-    top: calc(28% + 10px) !important; /* Changed back to a reasonable offset */
+    top: calc(28%) !important; /* Move down by 10px from default 28% */
   }
 }
 
-/* Ensure proper transitions between slides */
-.slide-transitioning .bg-slide:not(.active) {
-  visibility: hidden !important;
-  opacity: 0 !important;
-  transition: opacity 0.5s ease-out, visibility 0.5s ease-out !important;
-}
-
-/* Prevent content overlap during transitions */
-.slide-transitioning .bg-slide:not(.active) .content {
-  opacity: 0 !important;
-  transform: scale(0.95) translate(-50%, -50%) !important;
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out !important;
+/* Improved fix for mobile slide transition issues */
+@media (max-width: 768px) {
+  /* Base state for slides - not visible */
+  .bg-slide {
+    display: none !important;
+    opacity: 0 !important;
+    transition: none !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    z-index: 100 !important;
+    overflow: hidden !important;
+  }
+  
+  /* Active slide - visible */
+  .bg-slide.active {
+    display: block !important;
+    opacity: 1 !important;
+    z-index: 200 !important;
+  }
+  
+  /* During transitions, maintain cleaner state management */
+  body.slide-transitioning .bg-slide:not(.active) {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    z-index: -1 !important;
+  }
+  
+  /* Active slide during transition */
+  body.slide-transitioning .bg-slide.active {
+    display: block !important;
+    z-index: 200 !important;
+  }
+  
+  /* Hide UI elements during transitions */
+  body.slide-transitioning .wedding-date-location,
+  body.slide-transitioning .lead {
+    opacity: 0 !important;
+  }
+  
+  /* Ensure images fully cover their container */
+  .circle.bg .mobile-slide {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    object-fit: cover !important;
+  }
+  
+  /* Prevent the circle background from having any transforms */
+  .circle.bg {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    border-radius: 0 !important;
+  }
 }

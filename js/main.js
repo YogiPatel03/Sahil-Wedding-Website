@@ -1,6 +1,7 @@
 // Track ongoing slide transitions
 let slideTransitionInProgress = false;
 let transitionTimeouts = [];
+let lastRequestedSlide = null;
 
 // Initialize slide index at load
 let currentSlideIndex = 0;
@@ -13,155 +14,115 @@ const clearTransitionTimeouts = () => {
 
 // toggles background active with improved transition handling
 const slideNavigator = name => {
-    let slides = document.querySelectorAll('.bg-slide');
+    // Store the last requested slide to prevent race conditions
+    lastRequestedSlide = name;
     
-    // Find current active and next slide
-    const currentActive = document.querySelector('.bg-slide.active');
+    // Get all slides and specific targets
+    let slides = document.querySelectorAll('.bg-slide');
     const nextSlide = document.querySelector(`.bg-slide.${name}`);
     
-    if (currentActive === nextSlide) return; // Don't do anything if clicking the same slide
+    if (!nextSlide) return; // Safety check
     
-    // If a transition is in progress, clear all timeouts
+    // If already on this slide, do nothing
+    if (nextSlide.classList.contains('active') && !slideTransitionInProgress) return;
+    
+    // If a transition is in progress, cancel it completely first
     if (slideTransitionInProgress) {
         clearTransitionTimeouts();
         
-        // Immediately complete any ongoing transitions
+        // Hard reset the state of all slides
         slides.forEach(slide => {
             if (slide !== nextSlide) {
-                slide.classList.remove('active');
-                slide.style.opacity = '0';
-                slide.style.transition = '';
-                
-                // Reset content positioning to prevent overlap
-                const content = slide.querySelector('.content');
-                if (content) {
-                    // Remove any inline styles that might be causing issues
-                    content.style.transform = '';
-                    content.style.opacity = '';
-                    
-                    // Ensure h1 and p elements have their defaults
-                    const heading = content.querySelector('h1');
-                    const paragraph = content.querySelector('p');
-                    if (heading) heading.style.cssText = '';
-                    if (paragraph) paragraph.style.cssText = '';
-                }
+                // Clear all transition-related classes and styles
+                slide.classList.remove('active', 'transition-active');
+                slide.style = ''; // Reset all inline styles
+                slide.style.display = 'none'; // Explicitly hide
             }
         });
     }
     
-    // Add class to body to indicate a slide transition is happening
+    // Mark transition in progress
+    slideTransitionInProgress = true;
     document.body.classList.add('slide-transitioning');
     
-    // Mark that we're starting a transition
-    slideTransitionInProgress = true;
+    // Hide all UI elements during transition
+    document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
+        el.style.opacity = '0';
+    });
     
-    // First fade out all slides except the target one with minimal delay
+    // Hide all other slides immediately
     slides.forEach(slide => {
         if (slide !== nextSlide) {
-            // Set transition to 'out' state
-            slide.style.transition = 'opacity 0.5s ease-out';
-            slide.style.opacity = '0';
-            
-            // Completely hide and reset slides that aren't active
-            const timeout = setTimeout(() => {
-                slide.classList.remove('active');
-                slide.style.opacity = '0'; // Keep it hidden
-                slide.style.visibility = 'hidden'; // Ensure it's completely hidden
-                slide.style.transition = ''; // Reset inline transition
-                
-                // Reset all content within the slide
-                const content = slide.querySelector('.content');
-                if (content) {
-                    content.style.opacity = '0';
-                    content.style.transform = '';
-                    
-                    // Reset any inline styles on headings and paragraphs
-                    const heading = content.querySelector('h1');
-                    const paragraph = content.querySelector('p');
-                    if (heading) heading.style.cssText = '';
-                    if (paragraph) paragraph.style.cssText = '';
-                }
-            }, 500); // Shorter fade out time
-            
-            transitionTimeouts.push(timeout);
+            slide.style.display = 'none';
+            slide.classList.remove('active', 'transition-active');
         }
     });
     
-    // Reset and prepare the new slide
-    const timeout1 = setTimeout(() => {
-        // Reset and prepare the new slide with clean styles
-        nextSlide.style.opacity = '0';
-        nextSlide.style.visibility = 'visible';
-        nextSlide.style.transition = 'opacity 0.8s ease-in';
-        
-        // Reset content elements to avoid stacking issues
-        const nextContent = nextSlide.querySelector('.content');
-        if (nextContent) {
-            nextContent.style.opacity = '0';
-            nextContent.style.transform = '';
-            
-            // Reset headings and paragraphs
-            const heading = nextContent.querySelector('h1');
-            const paragraph = nextContent.querySelector('p');
-            if (heading) heading.style.cssText = '';
-            if (paragraph) paragraph.style.cssText = '';
-        }
-        
-        // Add active class to the target slide
-        nextSlide.classList.add('active');
-        
-        // Start the fade in sequence
-        const timeout2 = setTimeout(() => {
-            nextSlide.style.opacity = '1';
-            
-            // Fade in content with delay
-            const timeout3 = setTimeout(() => {
-                const content = nextSlide.querySelector('.content');
-                if (content) {
-                    content.style.transition = 'opacity 0.8s ease-in, transform 0.8s ease-out';
-                    content.style.opacity = '1';
-                    content.style.transform = 'scale(1) translate(-50%, -50%)';
-                }
-                
-                // Mark transition as complete
-                const completionTimeout = setTimeout(() => {
-                    slideTransitionInProgress = false;
-                    document.body.classList.remove('slide-transitioning');
-                }, 800);
-                
-                transitionTimeouts.push(completionTimeout);
-            }, 400);
-            
-            transitionTimeouts.push(timeout3);
-        }, 100);
-        
-        transitionTimeouts.push(timeout2);
-    }, 500);
+    // Ensure next slide is visible but transparent
+    nextSlide.style.display = 'block';
+    nextSlide.style.opacity = '0';
     
-    transitionTimeouts.push(timeout1);
+    // Add active class to target slide
+    nextSlide.classList.add('active');
     
-    // Safety fallback - ensure transition is marked complete after a maximum time
+    // Simple, clean fade-in with minimal complexity
+    setTimeout(() => {
+        // Only proceed if this is still the requested slide
+        if (lastRequestedSlide !== name) return;
+        
+        // Set a clean transition
+        nextSlide.style.transition = 'opacity 0.4s ease-in';
+        nextSlide.style.opacity = '1';
+        
+        // Show UI elements after slide is visible
+        setTimeout(() => {
+            // Only proceed if this is still the requested slide
+            if (lastRequestedSlide !== name) return;
+            
+            document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
+                el.style.transition = 'opacity 0.3s ease-in';
+                el.style.opacity = '1';
+            });
+            
+            // Mark transition as complete
+            slideTransitionInProgress = false;
+            document.body.classList.remove('slide-transitioning');
+            
+            // Reset inline transitions
+            nextSlide.style.transition = '';
+            document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
+                el.style.transition = '';
+            });
+        }, 500);
+    }, 50);
+    
+    // Safety fallback
     const fallbackTimeout = setTimeout(() => {
+        // Reset everything to a clean state
         slideTransitionInProgress = false;
         document.body.classList.remove('slide-transitioning');
-    }, 3000);
+        
+        // Ensure only the target slide is active and visible
+        slides.forEach(slide => {
+            if (slide === nextSlide) {
+                slide.classList.add('active');
+                slide.style.opacity = '1';
+                slide.style.display = 'block';
+            } else {
+                slide.classList.remove('active', 'transition-active');
+                slide.style.opacity = '0';
+                slide.style.display = 'none';
+            }
+        });
+        
+        // Show UI elements
+        document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transition = '';
+        });
+    }, 1000);
     
     transitionTimeouts.push(fallbackTimeout);
-};
-
-// Reset CSS to fix slide 3 specific issue
-const resetSlideStyles = () => {
-    // Fix for slide 3 content positioning
-    const slide3 = document.querySelector('.bg-slide.slide-3');
-    if (slide3) {
-        const content = slide3.querySelector('.content');
-        if (content) {
-            const heading = content.querySelector('h1');
-            const paragraph = content.querySelector('p');
-            if (heading) heading.style.cssText = '';
-            if (paragraph) paragraph.style.cssText = '';
-        }
-    }
 };
 
 // toggle mobile menu
@@ -224,9 +185,6 @@ window.addEventListener('load', () => {
     const handleSlideButtonClick = function(e) {
         e.preventDefault();
         e.stopPropagation(); // Prevent event bubbling
-        
-        // Reset slide styles to fix positioning issues
-        resetSlideStyles();
         
         // Get the index of this button
         const index = Array.from(slideBtnList).indexOf(this);

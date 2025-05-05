@@ -3,6 +3,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
+/* Add transitions to homepage elements for smooth appearance/disappearance */
+.wedding-date-location,
+.lead,
+.date-location-text,
+.countdown {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
 /* General Global Setting */
 * {
     margin: 0;
@@ -235,6 +243,8 @@ header:not(.active) .nav li a.active {
     align-items: center;
     overflow: hidden;
     transition: 0.5s;
+    /* Add transition properties for smooth appearance/disappearance */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .banner::after {
@@ -2729,4 +2739,79 @@ header:not(.active) ~ .banner .wedding-date-location {
     .Bride\&Groom .groom-name, .registry-title {
         letter-spacing: -0.01em; /* Tighten letter spacing slightly */
     }
+}
+
+/* Enhanced spacing for iPhone 15 Pro Max and other newer iPhones */
+@media screen and (max-width: 480px) and (min-height: 800px) {
+    .lead {
+        bottom: 8% !important; /* Move hashtag significantly lower */
+    }
+    
+    .wedding-date-location {
+        bottom: 25% !important; /* Move countdown higher */
+    }
+}
+
+/* Maximum separation for iPhone Pro Max models with notches */
+@supports (-webkit-touch-callout: none) and (max-width: 480px) and (min-height: 840px) {
+    .lead {
+        bottom: 10% !important; /* Move hashtag even lower */
+    }
+    
+    .lead svg {
+        margin-top: 70px !important; /* Much more space above hashtag */
+        height: 60px !important; /* Slightly smaller */
+    }
+    
+    .wedding-date-location {
+        bottom: 28% !important; /* Move countdown even higher */
+    }
+}
+
+/* Fix for elements not disappearing during page transitions */
+/* Hide homepage elements when ANY section is shown */
+section.section-show ~ .banner .wedding-date-location,
+section.section-show ~ .banner .lead,
+section.section-show ~ .banner .date-location-text,
+section.section-show ~ .banner .countdown {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: -1 !important; /* Move behind other content */
+    pointer-events: none !important;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Additional override for all banner content when sections are shown */
+body:has(section.section-show) .banner .wedding-date-location,
+body:has(section.section-show) .banner .lead,
+body:has(section.section-show) .banner .date-location-text,
+body:has(section.section-show) .banner .countdown {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+}
+
+/* Hide homepage elements during transitions - alternative approach */
+.section-transition .wedding-date-location,
+.section-transition .lead,
+.section-transition .date-location-text,
+.section-transition .countdown {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* When header is active (indicates we're on a section page), hide banner elements */
+header.active ~ .banner .wedding-date-location,
+header.active ~ .banner .lead,
+header.active ~ .banner .date-location-text,
+header.active ~ .banner .countdown {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
 }

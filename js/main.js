@@ -179,6 +179,9 @@ window.addEventListener('load', () => {
 
 // activates sections
 const sectionNavigator = name => {
+    // Safety check - if no name is provided, do nothing
+    if (!name) return;
+    
     let sections = document.querySelectorAll('section');
     let header = document.querySelector('header');
     
@@ -187,6 +190,16 @@ const sectionNavigator = name => {
     if (slideLoader) {
         slideLoader.style.display = 'none';
     }
+
+    // Hide the banner (which contains all slides and their wedding date/countdown elements)
+    const banner = document.querySelector('.banner');
+    if (banner) {
+        banner.style.visibility = 'hidden';
+        banner.style.opacity = '0';
+    }
+    
+    // Add transition class to body to trigger CSS rules
+    document.body.classList.add('section-transition');
 
     // Smooth scroll to top for mobile
     if (window.innerWidth <= 768) {
@@ -219,21 +232,42 @@ window.addEventListener('load', () => {
         nav.addEventListener('click', function (e) {
             e.preventDefault();
 
-            // Don't do anything if it's already active
-            if (this.classList.contains('active')) {
-                return;
-            }
-
+            // First, remove active class from ALL navigation buttons
+            // This ensures only one button is active at a time
             navList.forEach(el => {
                 el.classList.remove('active');
             });
-
+            
+            // Add active class to the clicked button
             this.classList.add('active');
+
+            // Check if this is the home button
+            const isHomeButton = this.getAttribute('href') === '/' && !this.getAttribute('data-target');
+
+            // If it's the home button, call resetHeader and return
+            if (isHomeButton) {
+                resetHeader();
+                return;
+            }
+            
+            // Get the target section
             const targetSection = this.getAttribute('data-target');
+
+            // Hide the banner when navigating to a section
+            const banner = document.querySelector('.banner');
+            if (banner) {
+                banner.style.visibility = 'hidden';
+                banner.style.opacity = '0';
+            }
+            
+            // Add transition class to body to trigger CSS rules
+            document.body.classList.add('section-transition');
+            
+            // Navigate to section
             sectionNavigator(targetSection);
 
             // If on mobile and menu is open, close it
-            if (window.innerWidth <= 768 &&
+            if (window.innerWidth <= 768 && 
                 document.querySelector('.nav').classList.contains('active')) {
                 toggleMenu();
             }
@@ -242,6 +276,32 @@ window.addEventListener('load', () => {
             if (targetSection) {
                 window.history.pushState(null, null, `#${targetSection}`);
             }
+        });
+    });
+    
+    // For all anchor tags that might be linking between sections
+    const internalLinks = document.querySelectorAll('a[href^="#"]');
+    internalLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // Skip if this is a navigation button (they're handled above)
+            if (this.classList.contains('nav-btn')) {
+                return;
+            }
+
+            // Don't hide elements if clicking to return to homepage
+            if (this.getAttribute('href') === '#' || this.getAttribute('href') === '') {
+                return;
+            }
+            
+            // Hide the banner when clicking links
+            const banner = document.querySelector('.banner');
+            if (banner) {
+                banner.style.visibility = 'hidden';
+                banner.style.opacity = '0';
+            }
+            
+            // Add transition class to body
+            document.body.classList.add('section-transition');
         });
     });
 
@@ -273,6 +333,29 @@ const resetHeader = () => {
     if (slideLoader) {
         slideLoader.style.display = '';
     }
+    
+    // Remove transition class
+    document.body.classList.remove('section-transition');
+    
+    // Show the banner (which contains all slides and their wedding date/countdown elements)
+    const banner = document.querySelector('.banner');
+    if (banner) {
+        banner.style.visibility = '';
+        banner.style.opacity = '';
+    }
+    
+    // IMPORTANT: Reset all navigation button states
+    // Remove 'active' class from all nav buttons
+    const allNavButtons = document.querySelectorAll('.nav-btn');
+    allNavButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Set only the home button as active
+    const homeButton = document.querySelector('.nav-btn[href="/"]');
+    if (homeButton) {
+        homeButton.classList.add('active');
+    }
 
     // Clear URL hash
     window.history.pushState(null, null, window.location.pathname);
@@ -280,6 +363,11 @@ const resetHeader = () => {
 
 // initial navigation
 const initNavigation = () => {
+    // Only proceed with navigation if we're on the homepage (no hash in URL)
+    if (window.location.hash && window.location.hash !== '#') {
+        return;
+    }
+    
     const navList = document.querySelectorAll('.nav-btn');
     navList.forEach(el => {
         el.classList.remove('active');
@@ -332,11 +420,18 @@ window.addEventListener('load', () => {
         // Calculate days
         const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
         
-        // Update the countdown in the DOM
-        const countdownElement = document.getElementById('countdown-days');
-        if (countdownElement) {
-            countdownElement.textContent = days;
-        }
+        // Update all countdown elements in the DOM
+        const countdownElements = [
+            document.getElementById('countdown-days'),
+            document.getElementById('countdown-days-2'),
+            document.getElementById('countdown-days-3')
+        ];
+        
+        countdownElements.forEach(element => {
+            if (element) {
+                element.textContent = days;
+            }
+        });
     };
     
     // Update countdown immediately and then daily
@@ -345,3 +440,43 @@ window.addEventListener('load', () => {
 });
 
 // Gallery functionality removed (no lightbox)
+
+// Handle page load properly for direct section links
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if we're loading directly to a section (via URL hash)
+    if (window.location.hash && window.location.hash !== '#') {
+        // Hide the banner when loading to a section
+        const banner = document.querySelector('.banner');
+        if (banner) {
+            banner.style.visibility = 'hidden';
+            banner.style.opacity = '0';
+        }
+        
+        // Add transition class
+        document.body.classList.add('section-transition');
+    } else {
+        // We're on the homepage, make sure banner is visible
+        const banner = document.querySelector('.banner');
+        if (banner) {
+            banner.style.visibility = '';
+            banner.style.opacity = '';
+        }
+        
+        // Remove transition class
+        document.body.classList.remove('section-transition');
+    }
+    
+    // Always check if any section is currently showing
+    const anyVisibleSection = document.querySelector('section.section-show');
+    if (anyVisibleSection) {
+        // Hide the banner if a section is visible
+        const banner = document.querySelector('.banner');
+        if (banner) {
+            banner.style.visibility = 'hidden';
+            banner.style.opacity = '0';
+        }
+        
+        // Add transition class
+        document.body.classList.add('section-transition');
+    }
+});

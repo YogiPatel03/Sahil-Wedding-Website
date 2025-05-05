@@ -494,10 +494,10 @@ header:not(.active) .nav li a.active {
     /* Ensure the wedding date and countdown are visible and properly positioned */
     .wedding-date-location {
         position: fixed !important; /* Changed to fixed to ensure consistent positioning */
-        bottom: 15% !important; /* EXTREMELY far down - nearly at bottom */
+        bottom: 13% !important; /* Moved higher up from 6% */
         left: 0 !important;
         right: 0 !important;
-        z-index: 2000 !important;
+        z-index: 2100 !important; /* Higher z-index to appear above hashtag */
         display: block !important;
         width: 100% !important;
         margin: 0 !important;
@@ -517,7 +517,7 @@ header:not(.active) .nav li a.active {
     /* Move ONLY the hashtag further down */
     .lead {
         position: fixed !important; /* Changed to fixed to ensure consistent positioning */
-        bottom: 0.5% !important; /* Moved extremely close to bottom */
+        bottom: 6% !important; /* Just above slide buttons */
         left: 0 !important;
         right: 0 !important;
         z-index: 2000 !important;
@@ -2051,11 +2051,11 @@ header:not(.active) ~ .banner .wedding-date-location {
 
 @media (max-width: 768px) {
   .wedding-date-location {
-    position: fixed !important; /* Changed to fixed to ensure consistent positioning */
-    bottom: 15% !important; /* EXTREMELY far down - nearly at bottom */
+    position: fixed !important;
+    bottom: 13% !important; /* Moved higher up from 6% */
     left: 0 !important;
     right: 0 !important;
-    z-index: 2000 !important;
+    z-index: 2100 !important; /* Higher z-index to appear above hashtag */
     display: block !important;
     width: 100% !important;
     margin: 0 !important;
@@ -2064,22 +2064,30 @@ header:not(.active) ~ .banner .wedding-date-location {
   
   .date-location-text {
     flex-direction: column !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 5px !important;
   }
   
   .countdown {
-    margin-top: 15px !important;
+    margin-top: 5px !important;
   }
   
   .lead {
-    position: fixed !important; /* Changed to fixed to ensure consistent positioning */
-    bottom: 0.5% !important; /* Moved extremely close to bottom */
+    position: fixed !important;
+    bottom: 16% !important; /* Position above the date/location */
     left: 0 !important;
     right: 0 !important;
-    z-index: 2000 !important;
+    z-index: 2000 !important; /* Lower z-index to appear below date/location */
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+  }
+  
+  /* Position the slide buttons at the very bottom */
+  .slide-loader {
+    position: fixed !important;
+    bottom: 0.5% !important;
+    right: 4% !important;
+    z-index: 2500 !important;
   }
 }
 
@@ -2390,10 +2398,10 @@ header:not(.active) ~ .banner .wedding-date-location {
     /* 3a. Move the date location DRAMATICALLY further down */
     .wedding-date-location {
         position: fixed !important; /* Changed to fixed to ensure consistent positioning */
-        bottom: 15% !important; /* EXTREMELY far down - nearly at bottom */
+        bottom: 13% !important; /* Moved higher up from 6% */
         left: 0 !important;
         right: 0 !important;
-        z-index: 2000 !important;
+        z-index: 2100 !important; /* Higher z-index to appear above hashtag */
         display: block !important;
         width: 100% !important;
         margin: 0 !important;
@@ -2414,7 +2422,7 @@ header:not(.active) ~ .banner .wedding-date-location {
     /* 3c. Move the hashtag DRAMATICALLY further down */
     .lead {
         position: fixed !important; /* Changed to fixed to ensure consistent positioning */
-        bottom: 0.5% !important; /* Moved extremely close to bottom */
+        bottom: 6% !important; /* Just above slide buttons */
         left: 0 !important;
         right: 0 !important;
         z-index: 2000 !important;
@@ -2701,7 +2709,7 @@ header:not(.active) ~ .banner .wedding-date-location {
     
     /* Add more space between countdown and hashtag */
     .wedding-date-location {
-        margin-bottom: 30px !important; /* Add more space below */
+        margin-bottom: 50px !important; /* Add more space below */
     }
 }
 
@@ -2744,42 +2752,68 @@ header:not(.active) ~ .banner .wedding-date-location {
 /* Enhanced spacing for iPhone 15 Pro Max and other newer iPhones */
 @media screen and (max-width: 480px) and (min-height: 800px) {
     .lead {
-        bottom: 8% !important; /* Move hashtag significantly lower */
+        bottom: 16% !important; /* Above the date/location */
     }
     
     .wedding-date-location {
-        bottom: 25% !important; /* Move countdown higher */
+        bottom: 13% !important; /* Moved higher up from 6% */
+    }
+    
+    /* Make things fit better on larger iPhone screens */
+    .date-location-text {
+        font-size: 1.2rem !important;
+    }
+    
+    .countdown {
+        font-size: 1.1rem !important;
     }
 }
 
 /* Maximum separation for iPhone Pro Max models with notches */
 @supports (-webkit-touch-callout: none) and (max-width: 480px) and (min-height: 840px) {
     .lead {
-        bottom: 10% !important; /* Move hashtag even lower */
+        bottom: 17% !important; /* Slightly higher on tall iPhones */
     }
     
     .lead svg {
-        margin-top: 70px !important; /* Much more space above hashtag */
-        height: 60px !important; /* Slightly smaller */
+        margin-top: 0 !important; 
+        height: 50px !important; /* Slightly smaller */
     }
     
     .wedding-date-location {
-        bottom: 28% !important; /* Move countdown even higher */
+        bottom: 14% !important; /* Moved higher up from 7% */
     }
 }
 
-/* Fix for elements not disappearing during page transitions */
-/* Hide homepage elements when ANY section is shown */
-section.section-show ~ .banner .wedding-date-location,
-section.section-show ~ .banner .lead,
-section.section-show ~ .banner .date-location-text,
-section.section-show ~ .banner .countdown {
+/* Specific fix for iOS devices */
+@supports (-webkit-touch-callout: none) {
+    /* iOS specific styles */
+    .lead {
+        bottom: 17% !important; /* Higher on iOS */
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important; /* Better shadow for legibility */
+    }
+    
+    .wedding-date-location {
+        bottom: 14% !important; /* Moved higher up from 7% */
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important; /* Better shadow for legibility */
+    }
+    
+    /* Fix font rendering on iOS */
+    .date-location-text, .countdown, .lead svg text {
+        -webkit-font-smoothing: antialiased !important;
+    }
+}
+
+/* When header is active (indicates we're on a section page), hide banner elements */
+header.active ~ .banner .wedding-date-location,
+header.active ~ .banner .lead,
+header.active ~ .banner .date-location-text,
+header.active ~ .banner .countdown {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
-    z-index: -1 !important; /* Move behind other content */
+    z-index: -1 !important;
     pointer-events: none !important;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 /* Additional override for all banner content when sections are shown */
@@ -2804,14 +2838,150 @@ body:has(section.section-show) .banner .countdown {
     opacity: 0 !important;
 }
 
-/* When header is active (indicates we're on a section page), hide banner elements */
-header.active ~ .banner .wedding-date-location,
-header.active ~ .banner .lead,
-header.active ~ .banner .date-location-text,
-header.active ~ .banner .countdown {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    z-index: -1 !important;
-    pointer-events: none !important;
+/* Fix the ordering issue - adjust z-index to ensure proper layering */
+@media (max-width: 768px) {
+  /* Date/location should be positioned lower */
+  .wedding-date-location {
+    position: fixed !important;
+    bottom: 14% !important; /* Positioned above hashtag with clearance */
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 2100 !important;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 0 15px 0 !important; /* Add bottom padding */
+  }
+  
+  /* Date location text formatting */
+  .date-location-text {
+    flex-direction: column !important;
+    margin-bottom: 8px !important; /* Keep spacing minimal but clear */
+    line-height: 1.1 !important; /* Tighter line height */
+  }
+  
+  /* Countdown text */
+  .countdown {
+    margin-top: 8px !important; /* Reduced from 15px */
+    line-height: 1 !important; 
+  }
+  
+  /* Hashtag should appear BELOW with significant space */
+  .lead {
+    position: fixed !important;
+    bottom: 4% !important; /* Very close to bottom */
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 2000 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 40px !important; /* Fixed height to control space */
+  }
+  
+  /* Set specific height for hashtag SVG */
+  .lead svg {
+    height: 40px !important;
+    width: auto !important; 
+    max-width: 300px !important;
+  }
+
+  /* Ensure slide loader doesn't overlap with hashtag */
+  .slide-loader {
+    bottom: 0.5% !important;
+    right: 3% !important;
+  }
+}
+
+/* Enhanced spacing for iPhone 15 Pro Max and other newer iPhones */
+@media screen and (max-width: 480px) and (min-height: 800px) {
+    .wedding-date-location {
+        bottom: 14% !important; /* Same position */
+    }
+    
+    .lead {
+        bottom: 4% !important; /* Same position */
+    }
+}
+
+/* Maximum separation for iPhone Pro Max models with notches */
+@supports (-webkit-touch-callout: none) and (max-width: 480px) and (min-height: 840px) {
+    .wedding-date-location {
+        bottom: 14% !important; /* Same position */
+    }
+    
+    .lead {
+        bottom: 4% !important; /* Same position */
+    }
+}
+
+/* Specific fix for iOS devices */
+@supports (-webkit-touch-callout: none) {
+    /* iOS specific styles */
+    .wedding-date-location {
+        bottom: 14% !important; /* Same position */
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important; /* Better shadow for legibility */
+    }
+    
+    .lead {
+        bottom: 4% !important; /* Same position */
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important; /* Better shadow for legibility */
+    }
+}
+
+@media (max-width: 768px) {
+  /* Move the hashtag up closer to the date/location */
+  .lead {
+    position: fixed !important;
+    bottom: 7% !important; /* Moved up from 6% to be closer to date/location */
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 2000 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Increase size of hashtag text by ~75% */
+  .lead svg {
+    width: 90% !important;
+    max-width: 450px !important; /* Increased from 300px (50% larger) */
+    height: 70px !important; /* Increased from ~40px (75% larger) */
+    margin: 0 auto !important;
+    display: block !important;
+    margin-top: 15px !important; /* Reduced from 25px to move it up */
+  }
+}
+
+/* Enhanced spacing for iPhone 15 Pro Max and other newer iPhones */
+@media screen and (max-width: 480px) and (min-height: 800px) {
+  .lead {
+    bottom: 7% !important;
+  }
+  
+  .lead svg {
+    height: 70px !important;
+  }
+}
+
+/* Maximum separation for iPhone Pro Max models with notches */
+@supports (-webkit-touch-callout: none) and (max-width: 480px) and (min-height: 840px) {
+  .lead {
+    bottom: 7% !important;
+  }
+  
+  .lead svg {
+    height: 70px !important;
+  }
+}
+
+/* Specific fix for iOS devices */
+@supports (-webkit-touch-callout: none) {
+  .lead {
+    bottom: 7% !important;
+  }
+  
+  .lead svg {
+    height: 70px !important;
+  }
 }

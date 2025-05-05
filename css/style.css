@@ -2985,3 +2985,28 @@ body:has(section.section-show) .banner .countdown {
     height: 70px !important;
   }
 }
+
+/* Specific adjustment for slide 3 title and body text */
+@media (max-width: 768px) {
+  .bg-slide.slide-3 .content h1 {
+    top: calc(15% + 10px) !important; /* Changed back to a reasonable offset */
+  }
+  
+  .bg-slide.slide-3 .content p {
+    top: calc(28% + 10px) !important; /* Changed back to a reasonable offset */
+  }
+}
+
+/* Ensure proper transitions between slides */
+.slide-transitioning .bg-slide:not(.active) {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out !important;
+}
+
+/* Prevent content overlap during transitions */
+.slide-transitioning .bg-slide:not(.active) .content {
+  opacity: 0 !important;
+  transform: scale(0.95) translate(-50%, -50%) !important;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out !important;
+}

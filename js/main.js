@@ -29,59 +29,139 @@ const slideNavigator = name => {
         slides.forEach(slide => {
             if (slide !== nextSlide) {
                 slide.classList.remove('active');
-                slide.style.opacity = '';
+                slide.style.opacity = '0';
                 slide.style.transition = '';
+                
+                // Reset content positioning to prevent overlap
+                const content = slide.querySelector('.content');
+                if (content) {
+                    // Remove any inline styles that might be causing issues
+                    content.style.transform = '';
+                    content.style.opacity = '';
+                    
+                    // Ensure h1 and p elements have their defaults
+                    const heading = content.querySelector('h1');
+                    const paragraph = content.querySelector('p');
+                    if (heading) heading.style.cssText = '';
+                    if (paragraph) paragraph.style.cssText = '';
+                }
             }
         });
     }
     
+    // Add class to body to indicate a slide transition is happening
+    document.body.classList.add('slide-transitioning');
+    
     // Mark that we're starting a transition
     slideTransitionInProgress = true;
     
-    // First fade out all slides except the target one
+    // First fade out all slides except the target one with minimal delay
     slides.forEach(slide => {
         if (slide !== nextSlide) {
             // Set transition to 'out' state
-            slide.style.transition = 'opacity 0.8s ease-out';
+            slide.style.transition = 'opacity 0.5s ease-out';
             slide.style.opacity = '0';
             
-            // Remove active class after transition
+            // Completely hide and reset slides that aren't active
             const timeout = setTimeout(() => {
                 slide.classList.remove('active');
-                slide.style.opacity = ''; // Reset inline style
-                slide.style.transition = ''; // Reset inline style
-            }, 800);
+                slide.style.opacity = '0'; // Keep it hidden
+                slide.style.visibility = 'hidden'; // Ensure it's completely hidden
+                slide.style.transition = ''; // Reset inline transition
+                
+                // Reset all content within the slide
+                const content = slide.querySelector('.content');
+                if (content) {
+                    content.style.opacity = '0';
+                    content.style.transform = '';
+                    
+                    // Reset any inline styles on headings and paragraphs
+                    const heading = content.querySelector('h1');
+                    const paragraph = content.querySelector('p');
+                    if (heading) heading.style.cssText = '';
+                    if (paragraph) paragraph.style.cssText = '';
+                }
+            }, 500); // Shorter fade out time
             
             transitionTimeouts.push(timeout);
         }
     });
     
-    // Add active class to the target slide
-    nextSlide.classList.add('active');
-    
-    // Ensure a smooth entrance animation
-    requestAnimationFrame(() => {
-        const timeout = setTimeout(() => {
-            nextSlide.style.transition = 'opacity 1.2s ease-in';
+    // Reset and prepare the new slide
+    const timeout1 = setTimeout(() => {
+        // Reset and prepare the new slide with clean styles
+        nextSlide.style.opacity = '0';
+        nextSlide.style.visibility = 'visible';
+        nextSlide.style.transition = 'opacity 0.8s ease-in';
+        
+        // Reset content elements to avoid stacking issues
+        const nextContent = nextSlide.querySelector('.content');
+        if (nextContent) {
+            nextContent.style.opacity = '0';
+            nextContent.style.transform = '';
+            
+            // Reset headings and paragraphs
+            const heading = nextContent.querySelector('h1');
+            const paragraph = nextContent.querySelector('p');
+            if (heading) heading.style.cssText = '';
+            if (paragraph) paragraph.style.cssText = '';
+        }
+        
+        // Add active class to the target slide
+        nextSlide.classList.add('active');
+        
+        // Start the fade in sequence
+        const timeout2 = setTimeout(() => {
             nextSlide.style.opacity = '1';
             
-            // Mark transition as complete after animation finishes
-            const completionTimeout = setTimeout(() => {
-                slideTransitionInProgress = false;
-            }, 1200);
+            // Fade in content with delay
+            const timeout3 = setTimeout(() => {
+                const content = nextSlide.querySelector('.content');
+                if (content) {
+                    content.style.transition = 'opacity 0.8s ease-in, transform 0.8s ease-out';
+                    content.style.opacity = '1';
+                    content.style.transform = 'scale(1) translate(-50%, -50%)';
+                }
+                
+                // Mark transition as complete
+                const completionTimeout = setTimeout(() => {
+                    slideTransitionInProgress = false;
+                    document.body.classList.remove('slide-transitioning');
+                }, 800);
+                
+                transitionTimeouts.push(completionTimeout);
+            }, 400);
             
-            transitionTimeouts.push(completionTimeout);
-        }, 50);
+            transitionTimeouts.push(timeout3);
+        }, 100);
         
-        transitionTimeouts.push(timeout);
-    });
+        transitionTimeouts.push(timeout2);
+    }, 500);
+    
+    transitionTimeouts.push(timeout1);
     
     // Safety fallback - ensure transition is marked complete after a maximum time
     const fallbackTimeout = setTimeout(() => {
         slideTransitionInProgress = false;
-    }, 2500);
+        document.body.classList.remove('slide-transitioning');
+    }, 3000);
     
     transitionTimeouts.push(fallbackTimeout);
+};
+
+// Reset CSS to fix slide 3 specific issue
+const resetSlideStyles = () => {
+    // Fix for slide 3 content positioning
+    const slide3 = document.querySelector('.bg-slide.slide-3');
+    if (slide3) {
+        const content = slide3.querySelector('.content');
+        if (content) {
+            const heading = content.querySelector('h1');
+            const paragraph = content.querySelector('p');
+            if (heading) heading.style.cssText = '';
+            if (paragraph) paragraph.style.cssText = '';
+        }
+    }
 };
 
 // toggle mobile menu
@@ -144,6 +224,9 @@ window.addEventListener('load', () => {
     const handleSlideButtonClick = function(e) {
         e.preventDefault();
         e.stopPropagation(); // Prevent event bubbling
+        
+        // Reset slide styles to fix positioning issues
+        resetSlideStyles();
         
         // Get the index of this button
         const index = Array.from(slideBtnList).indexOf(this);

@@ -1,3 +1,33 @@
+// Preload all slide images
+function preloadSlideImages() {
+  const imagesToPreload = [
+    './images/Mobile1.jpg',
+    './images/Mobile2.jpg',
+    './images/Mobile3.jpg',
+    './images/WarpSlide1Full.jpg',
+    './images/warpSlide2Full.jpg',
+    './images/warpSlide3Full.jpg'
+  ];
+  
+  // Create an array to track loading
+  const preloadedImages = [];
+  
+  // Preload each image
+  imagesToPreload.forEach(src => {
+    const img = new Image();
+    img.onload = function() {
+      console.log(`Preloaded: ${src}`);
+    };
+    img.src = src;
+    preloadedImages.push(img);
+  });
+  
+  console.log('Started preloading all slide images');
+}
+
+// Call preload function when page loads
+window.addEventListener('load', preloadSlideImages);
+
 // Track ongoing slide transitions
 let slideTransitionInProgress = false;
 let transitionTimeouts = [];

@@ -551,3 +551,39 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('section-transition');
     }
 });
+
+// Mobile home page scroll lock implementation
+function toggleMobileScrollLock() {
+  // Check if we're on mobile
+  if (window.innerWidth <= 768) {
+    // Check if any section is visible
+    const anyActiveSections = document.querySelector('section.section-show');
+    
+    if (!anyActiveSections) {
+      // No sections active, we're on homepage - lock scrolling
+      document.body.classList.add('home-active');
+      document.body.classList.remove('section-active');
+    } else {
+      // Section is active - enable scrolling
+      document.body.classList.remove('home-active');
+      document.body.classList.add('section-active');
+    }
+  }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', function() {
+  toggleMobileScrollLock();
+  
+  // Run when sections are shown/hidden
+  const navButtons = document.querySelectorAll('.nav-btn');
+  navButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Small delay to allow section transition to complete
+      setTimeout(toggleMobileScrollLock, 300);
+    });
+  });
+  
+  // Run on resize (in case of orientation change)
+  window.addEventListener('resize', toggleMobileScrollLock);
+});

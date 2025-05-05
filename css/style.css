@@ -3168,3 +3168,100 @@ body:has(section.section-show) .banner .countdown {
     border-radius: 0 !important;
   }
 }
+
+/* Hide slides 2-3 and navigation buttons on mobile devices */
+@media (max-width: 768px) {
+  /* Hide slides 2 and 3 completely */
+  .bg-slide.slide-2,
+  .bg-slide.slide-3 {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Hide slide navigation buttons */
+  .slide-loader {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Force slide 1 to always be visible */
+  .bg-slide.slide-1 {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 200 !important;
+  }
+}
+
+/* FINAL OVERRIDE: Completely hide slide navigation on mobile devices - no exceptions */
+@media (max-width: 768px) {
+  .slide-loader,
+  .slide-loader li,
+  .slide-loader li a {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    z-index: -9999 !important;
+  }
+
+  /* Hide all slides except slide 1 */
+  .bg-slide:not(.slide-1) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* Force slide 1 to be visible */
+  .bg-slide.slide-1 {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 200 !important;
+  }
+}
+
+/* MOBILE HOME PAGE SCROLL LOCK: Prevent scrolling on homepage for mobile devices */
+@media (max-width: 768px) {
+  /* When no section is active (homepage is showing), lock scrolling */
+  body:not(:has(section.section-show)) {
+    position: fixed !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    touch-action: pan-x !important; /* Allow horizontal swiping but prevent vertical */
+  }
+  
+  /* Alternative selector for browsers that don't support :has */
+  body.home-active {
+    position: fixed !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    touch-action: pan-x !important;
+  }
+  
+  /* Allow scrolling when a section is active */
+  body:has(section.section-show),
+  body.section-active {
+    position: relative !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    touch-action: auto !important;
+  }
+  
+  /* Ensure banner fills the viewport exactly with no overflow */
+  .banner {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+  }
+}

@@ -498,7 +498,7 @@ header:not(.active) .nav li a.active {
     
     /* Move ONLY the hashtag further down */
     .lead {
-        position: fixed !important;
+        position: fixed !important; /* Changed to fixed to ensure consistent positioning */
         bottom: 0.5% !important; /* Moved extremely close to bottom */
         left: 0 !important;
         right: 0 !important;
@@ -2649,5 +2649,40 @@ header:not(.active) ~ .banner .wedding-date-location {
     .nav li a ion-icon {
         margin-right: 5px;
         font-size: 1.2rem;
+    }
+}
+
+/* Enhanced shadow for hashtag - much softer version */
+.lead svg text {
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6)) !important; /* Softer, more subtle shadow */
+}
+
+/* Fix for iPhone hashtag overlap with countdown */
+@media screen and (max-width: 480px) {
+    .lead {
+        bottom: 2% !important; /* Move further from bottom on small screens */
+    }
+    
+    .lead svg {
+        margin-top: 40px !important; /* Increased space above hashtag */
+        padding-bottom: 15px !important; /* Added bottom padding */
+    }
+}
+
+/* Specific fix for iOS devices */
+@supports (-webkit-touch-callout: none) {
+    /* iOS specific styles */
+    .lead {
+        bottom: 5% !important; /* Move even further down on iOS devices */
+    }
+    
+    .lead svg {
+        margin-top: 50px !important; /* More space for hashtag on iOS */
+        height: 70px !important; /* Adjust height on iOS */
+    }
+    
+    /* Add more space between countdown and hashtag */
+    .wedding-date-location {
+        margin-bottom: 30px !important; /* Add more space below */
     }
 }

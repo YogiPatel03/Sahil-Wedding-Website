@@ -61,7 +61,7 @@ const slideNavigator = name => {
         clearTransitionTimeouts();
         
         // Hard reset the state of all slides
-        slides.forEach(slide => {
+    slides.forEach(slide => {
             if (slide !== nextSlide) {
                 // Clear all transition-related classes and styles
                 slide.classList.remove('active', 'transition-active');
@@ -143,8 +143,8 @@ const slideNavigator = name => {
                 slide.classList.remove('active', 'transition-active');
                 slide.style.opacity = '0';
                 slide.style.display = 'none';
-            }
-        });
+        }
+    });
         
         // Show UI elements
         document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
@@ -214,7 +214,7 @@ window.addEventListener('load', () => {
     
     // Enhanced click handling for mobile
     const handleSlideButtonClick = function(e) {
-        e.preventDefault();
+            e.preventDefault();
         e.stopPropagation(); // Prevent event bubbling
         
         // Get the index of this button
@@ -222,13 +222,13 @@ window.addEventListener('load', () => {
         currentSlideIndex = index;
         
         // Update UI
-        slideBtnList.forEach(el => {
-            el.classList.remove('active');
-        });
-        this.classList.add('active');
+            slideBtnList.forEach(el => {
+                el.classList.remove('active');
+            });
+            this.classList.add('active');
         
         // Trigger slide change
-        slideNavigator(this.getAttribute('data-target'));
+            slideNavigator(this.getAttribute('data-target'));
     };
     
     // Remove any existing event listeners first
@@ -309,7 +309,7 @@ window.addEventListener('load', () => {
             navList.forEach(el => {
                 el.classList.remove('active');
             });
-            
+
             // Add active class to the clicked button
             this.classList.add('active');
 
@@ -339,7 +339,7 @@ window.addEventListener('load', () => {
             sectionNavigator(targetSection);
 
             // If on mobile and menu is open, close it
-            if (window.innerWidth <= 768 && 
+            if (window.innerWidth <= 768 &&
                 document.querySelector('.nav').classList.contains('active')) {
                 toggleMenu();
             }

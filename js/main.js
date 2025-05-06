@@ -75,58 +75,59 @@ const slideNavigator = name => {
     slideTransitionInProgress = true;
     document.body.classList.add('slide-transitioning');
     
-    // Hide all UI elements during transition
-    document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
-        el.style.opacity = '0';
-    });
+    // Get currently active slide before hiding UI elements
+    const currentSlide = document.querySelector('.bg-slide.active');
     
-    // Hide all other slides immediately
-    slides.forEach(slide => {
-        if (slide !== nextSlide) {
-            slide.style.display = 'none';
-            slide.classList.remove('active', 'transition-active');
-        }
-    });
-    
-    // Ensure next slide is visible but transparent
+    // Prepare the next slide immediately before hiding anything
     nextSlide.style.display = 'block';
     nextSlide.style.opacity = '0';
     
-    // Add active class to target slide
+    // Set faster transition on the slide
+    nextSlide.style.transition = 'opacity 0.2s ease-in-out';
+    
+    // Add active class to target slide right away
     nextSlide.classList.add('active');
     
-    // Simple, clean fade-in with minimal complexity
+    // IMPORTANT: Hide UI elements AFTER preparing the next slide
+    document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
+        el.style.transition = 'opacity 0.15s ease';
+        el.style.opacity = '0';
+    });
+    
+    // Trigger the fade immediately (no 50ms delay)
+    nextSlide.style.opacity = '1';
+    
+    // If there is a current slide, hide it quickly but after new slide starts showing
+    if (currentSlide && currentSlide !== nextSlide) {
+        // Small delay to let new slide start appearing first
+        setTimeout(() => {
+            currentSlide.style.display = 'none';
+            currentSlide.classList.remove('active');
+        }, 100);
+    }
+    
+    // Show UI elements after a shorter time
     setTimeout(() => {
         // Only proceed if this is still the requested slide
         if (lastRequestedSlide !== name) return;
         
-        // Set a clean transition
-        nextSlide.style.transition = 'opacity 0.4s ease-in';
-        nextSlide.style.opacity = '1';
+        document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
+            el.style.transition = 'opacity 0.3s ease-in';
+            el.style.opacity = '1';
+        });
         
-        // Show UI elements after slide is visible
-        setTimeout(() => {
-            // Only proceed if this is still the requested slide
-            if (lastRequestedSlide !== name) return;
-            
-            document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
-                el.style.transition = 'opacity 0.3s ease-in';
-                el.style.opacity = '1';
-            });
-            
-            // Mark transition as complete
-            slideTransitionInProgress = false;
-            document.body.classList.remove('slide-transitioning');
-            
-            // Reset inline transitions
-            nextSlide.style.transition = '';
-            document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
-                el.style.transition = '';
-            });
-        }, 500);
-    }, 50);
+        // Mark transition as complete
+        slideTransitionInProgress = false;
+        document.body.classList.remove('slide-transitioning');
+        
+        // Reset inline transitions
+        nextSlide.style.transition = '';
+        document.querySelectorAll('.wedding-date-location, .lead').forEach(el => {
+            el.style.transition = '';
+        });
+    }, 300); // Reduced from 500ms
     
-    // Safety fallback
+    // Safety fallback with shorter timeout
     const fallbackTimeout = setTimeout(() => {
         // Reset everything to a clean state
         slideTransitionInProgress = false;
@@ -150,7 +151,7 @@ const slideNavigator = name => {
             el.style.opacity = '1';
             el.style.transition = '';
         });
-    }, 1000);
+    }, 800); // Reduced from 1000ms
     
     transitionTimeouts.push(fallbackTimeout);
 };

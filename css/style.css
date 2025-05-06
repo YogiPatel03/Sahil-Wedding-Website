@@ -3265,3 +3265,19 @@ body:has(section.section-show) .banner .countdown {
     width: 100% !important;
   }
 }
+
+/* Desktop-only: Move slide 2 heading up to avoid covering the ring */
+@media (min-width: 769px) {
+  .bg-slide.slide-2 .content h1 {
+    position: relative;
+    top: -30px; /* Move up by 30px from its normal position */
+    margin-bottom: 30px; /* Maintain spacing to paragraph */
+  }
+}
+
+/* Desktop-only: Nudge slide-3 content down slightly to avoid covering face */
+@media (min-width: 769px) {
+  .bg-slide.slide-3 .content {
+    top: 55% !important; /* Slightly lower than default 50% */
+  }
+}
